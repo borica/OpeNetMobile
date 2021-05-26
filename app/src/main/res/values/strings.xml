@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">OpeNet</string>
+
+    <string-array name="myarray">
+        <item>value1</item>
+        <item>value2</item>
+    </string-array>
 </resources>

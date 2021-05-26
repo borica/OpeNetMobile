@@ -1,10 +1,10 @@
-package com.br.opet.openet;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.br.opet.openet.activity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.br.opet.openet.R;
+
+public class MainActivity extends NoBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

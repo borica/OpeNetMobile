@@ -1,15 +1,15 @@
+
 package com.br.opet.openet.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.br.opet.openet.R;
 
-public class NoBarActivity extends AppCompatActivity {
+public class LoginActivity extends NoBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        setContentView(R.layout.activity_login);
     }
 }

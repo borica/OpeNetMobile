@@ -3,14 +3,20 @@ package com.br.opet.openet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.br.opet.openet.R;
+import com.br.opet.openet.model.UserModel;
+import com.br.opet.openet.service.UserService;
+import com.br.opet.openet.service.impl.UserServiceImpl;
 
 public class LoginActivity extends NoBarActivity implements View.OnClickListener {
+
+    private static final String TAG = LoginActivity.class.getName();
 
     //Inputs
     private EditText username;
@@ -19,6 +25,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
     //Actions
     private Button loginBtn;
     private TextView signUp;
+
+    private UserServiceImpl userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +40,15 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
 
         switch (v.getId()) {
             case R.id.loginButton:
-                validateFields();
+                if(validateFields()){
+                    UserModel authUser;
+                    try {
+                         authUser = userService.autenticate(new UserModel(username.getText().toString(), password.getText().toString()), this);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(TAG, "Erro ao consultar usuário:\n" + e.getMessage());
+                    }
+                }
                 break;
             case R.id.signUpTextView:
                 redirectToSignUpActivity();
@@ -48,9 +64,11 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
 
         loginBtn.setOnClickListener(this);
         signUp.setOnClickListener(this);
+
+        userService = new UserServiceImpl();
     }
 
-    private void validateFields() {
+    private Boolean validateFields() {
         boolean valid = true;
 
         if(username.getText().toString().isEmpty()){
@@ -62,6 +80,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
             password.setError("Favor inserir sua senha");
             valid = false;
         }
+
+        return valid;
     }
 
     //Redirect to SignUp Activity

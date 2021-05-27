@@ -17,6 +17,7 @@ public class MainActivity extends NoBarActivity {
     private void goLoginActivity() {
         Intent loginActivityIntent = new Intent(this, LoginActivity.class);
         startActivity(loginActivityIntent);
+        finish();
     }
 
 }

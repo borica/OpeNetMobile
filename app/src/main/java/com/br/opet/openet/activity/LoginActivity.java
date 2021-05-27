@@ -10,13 +10,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.br.opet.openet.R;
+import com.br.opet.openet.application.ApplicationContext;
+import com.br.opet.openet.listener.UserServiceResponseListener;
 import com.br.opet.openet.model.UserModel;
-import com.br.opet.openet.service.UserService;
+import com.br.opet.openet.model.dto.RequestUserAuthDTO;
 import com.br.opet.openet.service.impl.UserServiceImpl;
 
 public class LoginActivity extends NoBarActivity implements View.OnClickListener {
 
     private static final String TAG = LoginActivity.class.getName();
+
+    //Global ApplicationContext
+    private ApplicationContext applicationContext;
 
     //Inputs
     private EditText username;
@@ -40,15 +45,7 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
 
         switch (v.getId()) {
             case R.id.loginButton:
-                if(validateFields()){
-                    UserModel authUser;
-                    try {
-                         authUser = userService.autenticate(new UserModel(username.getText().toString(), password.getText().toString()), this);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(TAG, "Erro ao consultar usuário:\n" + e.getMessage());
-                    }
-                }
+                requestAuth();
                 break;
             case R.id.signUpTextView:
                 redirectToSignUpActivity();
@@ -56,7 +53,34 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         }
     }
 
+    private void requestAuth() {
+        if(validateFields()){
+            //New request DTO
+            RequestUserAuthDTO requestUserAuth = new RequestUserAuthDTO(username.getText().toString(), password.getText().toString());
+            try {
+                userService.autenticate(this, requestUserAuth, new UserServiceResponseListener() {
+                    @Override
+                    public void onError(String message) {
+                        //TODO Refactor to display a user friendly message
+                        createLongToast(LoginActivity.this, message);
+                    }
+                    @Override
+                    public void onResponse(UserModel userModelResponse) {
+                        //Sets successfully retrieved user to global application context
+                        applicationContext.setLoggedUser(userModelResponse);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, "Erro ao consultar usuário:\n" + e.getMessage());
+            }
+        }
+    }
+
     private void instanciateScreenObjects() {
+
+        applicationContext = (ApplicationContext) this.getApplicationContext();
+
         username = findViewById(R.id.usernameEditText);
         password = findViewById(R.id.passwordEditText);
         loginBtn = findViewById(R.id.loginButton);

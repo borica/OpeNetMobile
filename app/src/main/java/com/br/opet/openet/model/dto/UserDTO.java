@@ -1,8 +1,8 @@
-package com.br.opet.openet.model;
+package com.br.opet.openet.model.dto;
 
 import java.io.Serializable;
 
-public class UserModel implements Serializable {
+public class UserDTO implements Serializable {
 
     String id;
     String name;
@@ -10,19 +10,11 @@ public class UserModel implements Serializable {
     String password;
     String email;
     String avatar;
-    CourseModel couseModel;
+    String courseId;
     String birth_date;
-    String created;
-    String update;
-    String avatarUrl;
-    String token;
-
-    public UserModel(){}
-
-    public UserModel(String username, String password){
-        this.username = username;
-        this.password = password;
-    }
+    String created_at;
+    String updated_at;
+    String avatar_url;
 
     public String getPassword() {
         return password;
@@ -72,14 +64,6 @@ public class UserModel implements Serializable {
         this.avatar = avatar;
     }
 
-    public CourseModel getCouseModel() {
-        return couseModel;
-    }
-
-    public void setCouseModel(CourseModel couseModel) {
-        this.couseModel = couseModel;
-    }
-
     public String getBirth_date() {
         return birth_date;
     }
@@ -88,35 +72,35 @@ public class UserModel implements Serializable {
         this.birth_date = birth_date;
     }
 
-    public String getCreated() {
-        return created;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCreated(String created) {
-        this.created = created;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
-    public String getUpdate() {
-        return update;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setUpdate(String update) {
-        this.update = update;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public String getToken() {
-        return token;
+    public String getAvatar_url() {
+        return avatar_url;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
     }
 }

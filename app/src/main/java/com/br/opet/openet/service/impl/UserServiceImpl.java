@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
     public void autenticate(Context mContext, RequestUserAuthDTO RequestUserAuth, final UserServiceResponseListener sessionResponseListener) throws Exception {
 
         RequestQueue requestQueue = RequestSingleton.getInstance(mContext).getRequestQueue();
+
         Gson gson = new Gson();
 
         final JSONObject newUserRequest  = new JSONObject(gson.toJson(RequestUserAuth));
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
             String cause;
 
             if(error.getMessage() == null) {
-                cause = new String(String.valueOf(error.networkResponse.statusCode));
+                cause = String.valueOf(error.networkResponse.statusCode);
             } else {
                 cause = error.getMessage();
             }

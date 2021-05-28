@@ -86,6 +86,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
 
     //Redirect to SignUp Activity
     private void redirectToSignUpActivity() {
-        Intent signUpActivityIntent = new Intent();
+        Intent signUpActivityIntent = new Intent(this, RegisterActivity.class);
+        startActivity(signUpActivityIntent);
+//        finish();
     }
 }

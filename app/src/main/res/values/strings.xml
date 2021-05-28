@@ -1,8 +1,28 @@
 <resources>
     <string name="app_name">OpeNet</string>
 
-    <string-array name="myarray">
-        <item>value1</item>
-        <item>value2</item>
+    <string name="courses_prompt">Escolha um Curso</string>
+    <string-array name="courses">
+        <item>Administração</item>
+        <item>Análise Desenvolvimento De Sistema</item>
+        <item>Arquitetura e Urbanismo</item>
+        <item>Biomedicina</item>
+        <item>Ciências Contábeis</item>
+        <item>Comércio Exterior</item>
+        <item>Direito</item>
+        <item>Engenharia Civil</item>
+        <item>Engenharia De Produção</item>
+        <item>Engenharia Mecânica</item>
+        <item>Estética e Cosmética</item>
+        <item>Fisioterapia</item>
+        <item>Gestão de Recursos Humanos</item>
+        <item>Gestão Financeira</item>
+        <item>Logística</item>
+        <item>Marketing</item>
+        <item>Medicina Veterinária</item>
+        <item>Nutrição</item>
+        <item>Processos Gerencias</item>
+        <item>Psicologia</item>
+        <item>Publicidade e Propaganda</item>
     </string-array>
 </resources>

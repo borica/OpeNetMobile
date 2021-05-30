@@ -37,6 +37,8 @@
             android:drawableLeft="@drawable/custom_person_icon"
             android:paddingStart="12dp"
             android:paddingLeft="12dp"
+            android:paddingEnd="12dp"
+            android:paddingRight="12dp"
             android:paddingVertical="10dp"
             android:ems="10"
             android:background="@drawable/custom_input"
@@ -53,6 +55,8 @@
             android:drawableLeft="@drawable/ic_lock_focused"
             android:paddingStart="12dp"
             android:paddingLeft="12dp"
+            android:paddingEnd="12dp"
+            android:paddingRight="12dp"
             android:paddingVertical="10dp"
             android:ems="10"
             android:background="@drawable/custom_input"
@@ -63,13 +67,24 @@
             android:layout_marginTop="20dp"
             android:hint="Password" />
 
+        <TextView
+            android:id="@+id/loginErrorMessageTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/passwordEditText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:textColor="@android:color/holo_red_light"
+            android:text="Usuário ou senha incorretos !" />
+
         <Button
             android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/passwordEditText"
+            android:layout_below="@+id/loginErrorMessageTextView"
             android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="entrar"/>
 
         <TextView

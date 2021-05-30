@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OpeNet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.LoginActivity" android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.DashboardActivity"></activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

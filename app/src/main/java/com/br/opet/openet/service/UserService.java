@@ -9,6 +9,6 @@ import com.br.opet.openet.model.dto.RequestUserAuthDTO;
 public interface UserService {
 
     void createUser(UserModel saveUser) throws Exception;
-    void autenticate(Context mContext, RequestUserAuthDTO RequestUserAuth, final UserServiceResponseListener sessionResponseListener) throws Exception;
+    void authenticate(Context mContext, RequestUserAuthDTO RequestUserAuth, final UserServiceResponseListener sessionResponseListener) throws Exception;
 
 }

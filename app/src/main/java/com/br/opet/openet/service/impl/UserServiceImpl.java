@@ -2,7 +2,6 @@ package com.br.opet.openet.service.impl;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void autenticate(Context mContext, RequestUserAuthDTO RequestUserAuth, final UserServiceResponseListener sessionResponseListener) throws Exception {
+    public void authenticate(Context mContext, RequestUserAuthDTO RequestUserAuth, final UserServiceResponseListener sessionResponseListener) throws Exception {
 
         RequestQueue requestQueue = RequestSingleton.getInstance(mContext).getRequestQueue();
 
@@ -41,9 +40,7 @@ public class UserServiceImpl implements UserService {
 
             UserResponseDTO userResponseDTO = gson.fromJson(response.toString(), UserResponseDTO.class);
 
-            Toast.makeText(mContext, response.toString(), Toast.LENGTH_LONG).show();
-
-            sessionResponseListener.onResponse(new UserModel());
+            sessionResponseListener.onResponse(new UserModel(userResponseDTO));
         }, error -> {
             String cause;
 

@@ -29,7 +29,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
 
     //Actions
     private Button loginBtn;
-    private TextView signUp;
+    private TextView signUpTextView;
+    private TextView loginErrorMessageTextView;
 
     private UserServiceImpl userService;
 
@@ -58,16 +59,18 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
             //New request DTO
             RequestUserAuthDTO requestUserAuth = new RequestUserAuthDTO(username.getText().toString(), password.getText().toString());
             try {
-                userService.autenticate(this, requestUserAuth, new UserServiceResponseListener() {
+                userService.authenticate(this, requestUserAuth, new UserServiceResponseListener() {
                     @Override
                     public void onError(String message) {
-                        //TODO Refactor to display a user friendly message
-                        createLongToast(LoginActivity.this, message);
+                        loginErrorEvent();
                     }
                     @Override
                     public void onResponse(UserModel userModelResponse) {
                         //Sets successfully retrieved user to global application context
                         applicationContext.setLoggedUser(userModelResponse);
+                        if(applicationContext.getLoggedUser() != null) {
+                            redirectToDashboardActivity();
+                        }
                     }
                 });
             } catch (Exception e) {
@@ -84,10 +87,11 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         username = findViewById(R.id.usernameEditText);
         password = findViewById(R.id.passwordEditText);
         loginBtn = findViewById(R.id.loginButton);
-        signUp   = findViewById(R.id.signUpTextView);
+        signUpTextView   = findViewById(R.id.signUpTextView);
+        loginErrorMessageTextView = findViewById(R.id.loginErrorMessageTextView);
 
         loginBtn.setOnClickListener(this);
-        signUp.setOnClickListener(this);
+        signUpTextView.setOnClickListener(this);
 
         userService = new UserServiceImpl();
     }
@@ -108,8 +112,24 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         return valid;
     }
 
+    private void loginErrorEvent() {
+
+        loginErrorMessageTextView.setVisibility(View.VISIBLE);
+        username.setText("");
+        password.setText("");
+        username.setError(null);
+        password.setError(null);
+
+    }
+
     //Redirect to SignUp Activity
     private void redirectToSignUpActivity() {
         Intent signUpActivityIntent = new Intent();
+    }
+
+    private void redirectToDashboardActivity() {
+        Intent dashboardActivityIntent = new Intent(this, DashboardActivity.class);
+        startActivity(dashboardActivityIntent);
+        finish();
     }
 }

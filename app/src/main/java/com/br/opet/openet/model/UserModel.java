@@ -1,6 +1,9 @@
 package com.br.opet.openet.model;
 
+import com.br.opet.openet.model.dto.UserResponseDTO;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class UserModel implements Serializable {
 
@@ -11,9 +14,9 @@ public class UserModel implements Serializable {
     String email;
     String avatar;
     CourseModel couseModel;
-    String birth_date;
-    String created;
-    String update;
+    Date birth_date;
+    Date created;
+    Date update;
     String avatarUrl;
     String token;
 
@@ -22,6 +25,25 @@ public class UserModel implements Serializable {
     public UserModel(String username, String password){
         this.username = username;
         this.password = password;
+    }
+
+    public UserModel(UserResponseDTO userResponseDTO) {
+        this.id = userResponseDTO.getUser().getId();
+        this.name = userResponseDTO.getUser().getName();
+        this.username = userResponseDTO.getUser().getUsername();
+        this.password = userResponseDTO.getUser().getPassword();
+        this.email = userResponseDTO.getUser().getEmail();
+        this.avatar = userResponseDTO.getUser().getAvatar();
+        //TODO Parse CourseId to CourseModel
+        //this.couseModel = userResponseDTO.getUser().get ;
+        //TODO Parse birth_date to Date
+        //this.birth_date;
+        //TODO Parse created to Date
+        //this.created;
+        //TODO Parse update to Date
+        //this.update;
+        this.avatarUrl = userResponseDTO.getUser().getAvatar_url();
+        this.token = userResponseDTO.getToken();
     }
 
     public String getPassword() {
@@ -80,27 +102,27 @@ public class UserModel implements Serializable {
         this.couseModel = couseModel;
     }
 
-    public String getBirth_date() {
+    public Date getBirth_date() {
         return birth_date;
     }
 
-    public void setBirth_date(String birth_date) {
+    public void setBirth_date(Date birth_date) {
         this.birth_date = birth_date;
     }
 
-    public String getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(String created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
-    public String getUpdate() {
+    public Date getUpdate() {
         return update;
     }
 
-    public void setUpdate(String update) {
+    public void setUpdate(Date update) {
         this.update = update;
     }
 

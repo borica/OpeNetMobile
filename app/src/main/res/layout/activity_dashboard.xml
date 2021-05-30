@@ -30,36 +30,73 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/fragmentActionsLinearLayout"
+<!--    <LinearLayout-->
+<!--        android:id="@+id/fragmentActionsLinearLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:layout_below="@+id/headerLinearLayout"-->
+<!--        android:background="@color/openet_green">-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Amigos"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_weight="1"-->
+<!--            style="?android:attr/borderlessButtonStyle"/>-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Posts"-->
+<!--            android:layout_weight="1"-->
+<!--            style="?android:attr/borderlessButtonStyle"/>-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Mensagens"-->
+<!--            android:layout_weight="1"-->
+<!--            style="?android:attr/borderlessButtonStyle"/>-->
+
+<!--    </LinearLayout>-->
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/headerNavigationTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_below="@+id/headerLinearLayout"
-        android:background="@color/openet_green">
+        android:layout_below="@id/headerLinearLayout"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        android:background="@color/openet_green"
+        app:tabGravity="center">
 
-        <Button
-            android:layout_width="0dp"
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/friendsTabItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Amigos"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:text="AMIGOS"/>
 
-        <Button
-            android:layout_width="0dp"
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/postsTabItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Posts"
-            android:layout_weight="1"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:text="POSTS"/>
 
-        <Button
-            android:layout_width="0dp"
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/messagesTabItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mensagens"
-            android:layout_weight="1"
-            style="?android:attr/borderlessButtonStyle"/>
+            android:text="MENSAGENS"/>
 
-    </LinearLayout>
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/dashboardFragmentViewPager2"
+        android:layout_below="@id/headerNavigationTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
 </RelativeLayout>

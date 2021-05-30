@@ -45,7 +45,10 @@ public class UserServiceImpl implements UserService {
             String cause;
 
             if(error.getMessage() == null) {
-                cause = String.valueOf(error.networkResponse.statusCode);
+                if(error.networkResponse != null)
+                    cause = String.valueOf(error.networkResponse.statusCode);
+                else
+                    cause = "Erro não identificado.";
             } else {
                 cause = error.getMessage();
             }

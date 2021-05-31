@@ -25,7 +25,10 @@ public class DashboardActivity extends NoBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         instanciateComponents();
-
+        TabLayout.Tab tab = headerNavigationTabLayout.getTabAt(1);
+        if (tab != null) {
+            tab.select();
+        }
     }
 
     private void instanciateComponents() {

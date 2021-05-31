@@ -39,6 +39,9 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         instanciateScreenObjects();
+        if(applicationContext.getLoggedUser() != null){
+            redirectToDashboardActivity();
+        }
     }
 
     @Override

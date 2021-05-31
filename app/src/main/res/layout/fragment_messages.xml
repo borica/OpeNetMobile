@@ -5,10 +5,39 @@
     android:layout_height="match_parent"
     tools:context=".fragment.dashboardFragments.MessagesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/nothingToSeeRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/friendsImageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_marginTop="150dp"
+            android:src="@drawable/ic_empty" />
+
+        <TextView
+            android:id="@+id/noFriendsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/friendsImageView"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+
+            android:text="Está bem vazio por aqui...\nComece uma nova conversa"
+            android:textAlignment="center" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/noFriendsTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Explorar" />
+
+    </RelativeLayout>
 
 </FrameLayout>

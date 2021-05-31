@@ -22,15 +22,27 @@
 <!--            android:layout_gravity="start"-->
 <!--            android:src="@drawable/ic_round_avatar"/>-->
 
-        <ImageView
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:src="@drawable/text_logopng"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_weight="1"/>-->
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="25dp"
-            android:src="@drawable/text_logopng"
+            android:text="OPENET"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_weight="1"
+                />
 
-    </LinearLayout>
-<!--    <LinearLayout-->
+        </LinearLayout>
+    <!--    <LinearLayout-->
 <!--        android:id="@+id/fragmentActionsLinearLayout"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->

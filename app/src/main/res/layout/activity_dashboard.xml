@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/openet_green_light"
+    tools:context=".activity.DashboardActivity">
+
+    <LinearLayout
+        android:id="@+id/headerLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="10dp"
+        android:gravity="center_horizontal"
+        android:background="@color/openet_green">
+
+<!--        <ImageView-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_gravity="start"-->
+<!--            android:src="@drawable/ic_round_avatar"/>-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:src="@drawable/text_logopng"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_weight="1"/>-->
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:text="OPENET"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_weight="1"
+                />
+
+        </LinearLayout>
+    <!--    <LinearLayout-->
+<!--        android:id="@+id/fragmentActionsLinearLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_horizontal"-->
+<!--        android:layout_below="@+id/headerLinearLayout"-->
+<!--        android:background="@color/openet_green">-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Amigos"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_weight="1"-->
+<!--            style="?android:attr/borderlessButtonStyle"/>-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Posts"-->
+<!--            android:layout_weight="1"-->
+<!--            style="?android:attr/borderlessButtonStyle"/>-->
+
+<!--        <Button-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Mensagens"-->
+<!--            android:layout_weight="1"-->
+<!--            style="?android:attr/borderlessButtonStyle"/>-->
+
+<!--    </LinearLayout>-->
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/headerNavigationTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerLinearLayout"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        android:background="@color/openet_green"
+        app:tabGravity="center">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/friendsTabItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AMIGOS"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/postsTabItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="POSTS"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/messagesTabItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MENSAGENS"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/dashboardFragmentViewPager2"
+        android:layout_below="@id/headerNavigationTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</RelativeLayout>

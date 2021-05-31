@@ -1,0 +1,40 @@
+package com.br.opet.openet.adapter.fragmentAdapter;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.br.opet.openet.fragment.dashboardFragments.FriendsFragment;
+import com.br.opet.openet.fragment.dashboardFragments.MessagesFragment;
+import com.br.opet.openet.fragment.dashboardFragments.PostsFragment;
+
+public class DashboardFragmentAdapter extends FragmentStateAdapter {
+
+    public DashboardFragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
+        super(fragmentManager, lifecycle);
+    }
+
+    @NonNull
+    @Override
+    public Fragment createFragment(int position) {
+
+        switch (position) {
+            case 0:
+                return new FriendsFragment();
+            case 1:
+                return new PostsFragment();
+            case 2:
+                return new MessagesFragment();
+            default:
+                return new PostsFragment();
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 3;
+    }
+}

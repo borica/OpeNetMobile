@@ -10,13 +10,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.br.opet.openet.R;
+import com.br.opet.openet.application.ApplicationContext;
+import com.br.opet.openet.listener.UserServiceResponseListener;
 import com.br.opet.openet.model.UserModel;
-import com.br.opet.openet.service.UserService;
+import com.br.opet.openet.model.dto.RequestUserAuthDTO;
 import com.br.opet.openet.service.impl.UserServiceImpl;
 
 public class LoginActivity extends NoBarActivity implements View.OnClickListener {
 
     private static final String TAG = LoginActivity.class.getName();
+
+    //Global ApplicationContext
+    private ApplicationContext applicationContext;
 
     //Inputs
     private EditText username;
@@ -24,7 +29,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
 
     //Actions
     private Button loginBtn;
-    private TextView signUp;
+    private TextView signUpTextView;
+    private TextView loginErrorMessageTextView;
 
     private UserServiceImpl userService;
 
@@ -33,6 +39,9 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         instanciateScreenObjects();
+        if(applicationContext.getLoggedUser() != null){
+            redirectToDashboardActivity();
+        }
     }
 
     @Override
@@ -40,15 +49,7 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
 
         switch (v.getId()) {
             case R.id.loginButton:
-                if(validateFields()){
-                    UserModel authUser;
-                    try {
-                         authUser = userService.autenticate(new UserModel(username.getText().toString(), password.getText().toString()), this);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e(TAG, "Erro ao consultar usuário:\n" + e.getMessage());
-                    }
-                }
+                requestAuth();
                 break;
             case R.id.signUpTextView:
                 redirectToSignUpActivity();
@@ -56,14 +57,44 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         }
     }
 
+    private void requestAuth() {
+        if(validateFields()){
+            //New request DTO
+            RequestUserAuthDTO requestUserAuth = new RequestUserAuthDTO(username.getText().toString(), password.getText().toString());
+            try {
+                userService.authenticate(this, requestUserAuth, new UserServiceResponseListener() {
+                    @Override
+                    public void onError(String message) {
+                        loginErrorEvent();
+                    }
+                    @Override
+                    public void onResponse(UserModel userModelResponse) {
+                        //Sets successfully retrieved user to global application context
+                        applicationContext.setLoggedUser(userModelResponse);
+                        if(applicationContext.getLoggedUser() != null) {
+                            redirectToDashboardActivity();
+                        }
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, "Erro ao consultar usuário:\n" + e.getMessage());
+            }
+        }
+    }
+
     private void instanciateScreenObjects() {
+
+        applicationContext = (ApplicationContext) this.getApplicationContext();
+
         username = findViewById(R.id.usernameEditText);
         password = findViewById(R.id.passwordEditText);
         loginBtn = findViewById(R.id.loginButton);
-        signUp   = findViewById(R.id.signUpTextView);
+        signUpTextView   = findViewById(R.id.signUpTextView);
+        loginErrorMessageTextView = findViewById(R.id.loginErrorMessageTextView);
 
         loginBtn.setOnClickListener(this);
-        signUp.setOnClickListener(this);
+        signUpTextView.setOnClickListener(this);
 
         userService = new UserServiceImpl();
     }
@@ -84,10 +115,26 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         return valid;
     }
 
+    private void loginErrorEvent() {
+
+        loginErrorMessageTextView.setVisibility(View.VISIBLE);
+        username.setText("");
+        password.setText("");
+        username.setError(null);
+        password.setError(null);
+
+    }
+
     //Redirect to SignUp Activity
     private void redirectToSignUpActivity() {
         Intent signUpActivityIntent = new Intent(this, RegisterActivity.class);
         startActivity(signUpActivityIntent);
 //        finish();
+    }
+
+    private void redirectToDashboardActivity() {
+        Intent dashboardActivityIntent = new Intent(this, DashboardActivity.class);
+        startActivity(dashboardActivityIntent);
+        finish();
     }
 }

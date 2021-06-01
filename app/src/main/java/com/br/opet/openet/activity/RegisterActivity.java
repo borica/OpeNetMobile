@@ -1,33 +1,43 @@
 package com.br.opet.openet.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.service.autofill.RegexValidator;
-import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.br.opet.openet.R;
-import com.br.opet.openet.model.UserModel;
+import androidx.annotation.RequiresApi;
 
+import com.br.opet.openet.R;
+import com.br.opet.openet.listener.CourseServiceResponseListener;
+import com.br.opet.openet.listener.UserServiceResponseListener;
+import com.br.opet.openet.model.CourseModel;
+import com.br.opet.openet.model.UserModel;
+import com.br.opet.openet.model.dto.RequestUserAuthDTO;
+import com.br.opet.openet.model.dto.UserRegisterDTO;
+import com.br.opet.openet.service.impl.CourseServiceImpl;
+import com.br.opet.openet.service.impl.UserServiceImpl;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 public class RegisterActivity extends NoBarActivity implements View.OnClickListener {
 
-    private EditText name, lastName, userName, email, password, confirmPassword;
+    private EditText name, userName, email, password, confirmPassword;
     private Button register;
     private EditText nascimento;
-    private Date dtNascimento;
     private Spinner curso;
+    private ArrayList<CourseModel> cursos;
+
+    private UserServiceImpl userService;
     static final int DATE_DIALOG_ID = 0;
 
     @Override
@@ -37,6 +47,7 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
         instanciateScreenObjects();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -44,11 +55,41 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
                 showDialog(DATE_DIALOG_ID);
                 break;
             default:
-                validateFields();
+                if (validateFields()) {
+                    String[] splits = nascimento.getText().toString().split("/");
+                    UserRegisterDTO requestUserAuth = new UserRegisterDTO(
+                            name.getText().toString(),
+                            userName.getText().toString(),
+                            password.getText().toString(),
+                            email.getText().toString(),
+                            cursos.stream().filter(c -> c.getCourse().equals(curso.getSelectedItem().toString())).findFirst().get().getId(),
+                            splits[2] + "-" + splits[1] + "-" + splits[0] + "T00:00:00.000Z"
+                    );
+
+                    try {
+                        userService.createUser(this, requestUserAuth, new UserServiceResponseListener() {
+                            @Override
+                            public void onError(String message) {
+                                Toast.makeText(RegisterActivity.this, "Não foi possível realizar o cadastro.", Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void onResponse(UserModel userModelResponse) {
+                                Toast.makeText(RegisterActivity.this, "Cadastro realizado com sucesso.", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
                 break;
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private Boolean validateFields() {
         boolean valid = true;
 
@@ -58,16 +99,6 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
         } else {
             if (name.getText().toString().trim().length() < 3) {
                 name.setError("O nome deve ter mais que 3 caracteres");
-                valid = false;
-            }
-        }
-
-        if (lastName.getText().toString().trim().isEmpty()) {
-            lastName.setError("Favor informar um sobrenome");
-            valid = false;
-        } else {
-            if (lastName.getText().toString().trim().length() < 3) {
-                lastName.setError("O sobrenome deve ter mais que 3 caracteres");
                 valid = false;
             }
         }
@@ -91,7 +122,7 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
             password.setError("Favor informar uma senha.");
             valid = false;
         } else {
-            if (password.getText().toString().trim().length() > 6) {
+            if (password.getText().toString().trim().length() < 6) {
                 password.setError("A senha deve ter mais que 6 caracteres");
                 valid = false;
             }
@@ -101,13 +132,11 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
             confirmPassword.setError("Favor informar uma senha.");
             valid = false;
         } else {
-            if (confirmPassword.getText().toString().trim().equals(password.getText().toString().trim())) {
+            if (!confirmPassword.getText().toString().trim().equals(password.getText().toString().trim())) {
                 confirmPassword.setError("A senha deve ter mais que 6 caracteres");
                 valid = false;
             }
         }
-
-        System.out.println(curso.getSelectedItem().toString());
 
         return valid;
     }
@@ -136,7 +165,6 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
 
     private void instanciateScreenObjects() {
         name = findViewById(R.id.firstNameEditText);
-        lastName = findViewById(R.id.lastNameEditText);
         userName = findViewById(R.id.userNameEditText);
         email = findViewById(R.id.emailEditText);
         password = findViewById(R.id.passwordEditText);
@@ -148,6 +176,28 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
         nascimento.setOnClickListener(this);
 
         curso = findViewById(R.id.coursesSpinner);
+        userService = new UserServiceImpl();
+        loadCourses();
     }
 
+    private void loadCourses() {
+        try {
+            CourseServiceImpl service = new CourseServiceImpl();
+            service.listCourses(this, new CourseServiceResponseListener() {
+                @Override
+                public void onError(String message) {
+                }
+
+                @RequiresApi(api = Build.VERSION_CODES.N)
+                @Override
+                public void onResponse(ArrayList<CourseModel> courses) {
+                    cursos = courses;
+                    ArrayAdapter<CourseModel> adapter = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_spinner_item, cursos);
+                    curso.setAdapter(adapter);
+                }
+            });
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }

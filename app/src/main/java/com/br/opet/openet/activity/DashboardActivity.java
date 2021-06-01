@@ -2,8 +2,6 @@ package com.br.opet.openet.activity;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.br.opet.openet.R;
@@ -58,6 +56,8 @@ public class DashboardActivity extends NoBarActivity {
                 headerNavigationTabLayout.selectTab(headerNavigationTabLayout.getTabAt(position));
             }
         });
+
+
 
     }
 }

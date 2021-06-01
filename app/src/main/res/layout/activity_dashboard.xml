@@ -42,37 +42,6 @@
                 />
 
         </LinearLayout>
-    <!--    <LinearLayout-->
-<!--        android:id="@+id/fragmentActionsLinearLayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center_horizontal"-->
-<!--        android:layout_below="@+id/headerLinearLayout"-->
-<!--        android:background="@color/openet_green">-->
-
-<!--        <Button-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Amigos"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_weight="1"-->
-<!--            style="?android:attr/borderlessButtonStyle"/>-->
-
-<!--        <Button-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Posts"-->
-<!--            android:layout_weight="1"-->
-<!--            style="?android:attr/borderlessButtonStyle"/>-->
-
-<!--        <Button-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Mensagens"-->
-<!--            android:layout_weight="1"-->
-<!--            style="?android:attr/borderlessButtonStyle"/>-->
-
-<!--    </LinearLayout>-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/headerNavigationTabLayout"

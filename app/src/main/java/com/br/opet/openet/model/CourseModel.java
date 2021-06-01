@@ -8,6 +8,12 @@ public class CourseModel {
     String created;
     String updated;
 
+    public CourseModel(){}
+
+    public CourseModel(String courseName){
+        this.course = courseName;
+    }
+
     public String getId() {
         return id;
     }

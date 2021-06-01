@@ -15,6 +15,8 @@ import com.br.opet.openet.listener.UserServiceResponseListener;
 import com.br.opet.openet.model.UserModel;
 import com.br.opet.openet.model.dto.RequestUserAuthDTO;
 import com.br.opet.openet.service.impl.UserServiceImpl;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends NoBarActivity implements View.OnClickListener {
 
@@ -24,8 +26,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
     private ApplicationContext applicationContext;
 
     //Inputs
-    private EditText username;
-    private EditText password;
+    private TextInputEditText username;
+    private TextInputEditText password;
 
     //Actions
     private Button loginBtn;
@@ -87,8 +89,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
 
         applicationContext = (ApplicationContext) this.getApplicationContext();
 
-        username = findViewById(R.id.usernameEditText);
-        password = findViewById(R.id.passwordEditText);
+        username = findViewById(R.id.usernameTextInputEditText);
+        password = findViewById(R.id.passwordTextInputEditText);
         loginBtn = findViewById(R.id.loginButton);
         signUpTextView   = findViewById(R.id.signUpTextView);
         loginErrorMessageTextView = findViewById(R.id.loginErrorMessageTextView);

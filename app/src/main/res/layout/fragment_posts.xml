@@ -8,7 +8,8 @@
     <RelativeLayout
         android:id="@+id/nothingToSeeRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/friendsImageView"
@@ -37,6 +38,19 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:text="Explorar" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/postsRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/postsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 

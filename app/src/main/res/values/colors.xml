@@ -11,4 +11,9 @@
     <color name="red_watermelon">#ff4757</color>
     <color name="openet_green">#78e08f</color>
     <color name="openet_green_light">#D5FADD</color>
+    <color name="openet_green_dark">#23492B</color>
+
+    <!--    Unselected Button-->
+    <color name="unselect_button_text">#808080</color>
+
 </resources>

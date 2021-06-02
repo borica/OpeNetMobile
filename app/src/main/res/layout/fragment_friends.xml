@@ -45,11 +45,118 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/friendsListRecyclerView"
+        <LinearLayout
+            android:id="@+id/buttonGroupLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="5dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/friendRequestsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solicitações"
+                android:layout_weight="1"
+
+                android:layout_marginHorizontal="5dp"/>
+
+            <Button
+                android:id="@+id/allFriendsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Amigos"
+                android:layout_weight="5"
+                android:layout_marginHorizontal="5dp"/>
+
+            <Button
+                android:id="@+id/exploreFriendsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explorar"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/friendsListRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/buttonGroupLinearLayout"
+            android:visibility="gone">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/friendsListRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+
+        </RelativeLayout>
+
+<!--        TODO ADD PULL TO REFRESH VIEW -->
+        <RelativeLayout
+            android:id="@+id/friendRequestRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/buttonGroupLinearLayout"
+            android:visibility="visible">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/friendRequestListRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/exploreFriendsRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/buttonGroupLinearLayout"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/recommendedFriendsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Usuários recomendados:"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/openet_green_dark"/>
+
+           <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/exploreRecommendedFriendsListRecyclerView"
+                android:layout_below="@+id/recommendedFriendsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/allFriendsTextView"
+                android:layout_below="@+id/exploreRecommendedFriendsListRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Outros usuários:"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/openet_green_dark"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/exploreFriendsListRecyclerView"
+                android:layout_below="@+id/allFriendsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"/>
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 

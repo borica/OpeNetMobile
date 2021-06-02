@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/roundedbackground"
+    android:elevation="5dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginHorizontal="10dp"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="10dp">
+
+        <TextView
+            android:id="@+id/dataEnvelope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_default_avatar" />
+
+        <TextView
+            android:id="@+id/friendNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friend name"
+            android:layout_toRightOf="@id/image"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_toEndOf="@id/image"
+            android:layout_marginStart="20dp" />
+
+        <TextView
+            android:id="@+id/friendCourseTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Course Name"
+            android:layout_toRightOf="@id/image"
+            android:layout_below="@+id/friendNameTextView"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/image" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/friendCourseTextView"
+            android:layout_toRightOf="@id/image"
+            android:layout_toEndOf="@id/image"
+            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/messageFriendButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_check"
+                android:drawableEnd="@drawable/ic_check"
+                android:drawableTint="@color/white"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="aceitar"
+                android:textSize="10sp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                 />
+
+            <Button
+                android:id="@+id/removeFriendButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_remover_usuario"
+                android:drawableEnd="@drawable/ic_remover_usuario"
+                android:backgroundTint="@color/red_watermelon"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:text="recusar"
+                android:textSize="10sp"
+                android:maxLines="1"
+                android:layout_gravity="center"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+</RelativeLayout>

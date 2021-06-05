@@ -1,8 +1,12 @@
 package com.br.opet.openet.fragment.dashboardFragments;
 
-import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,24 +15,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-
 import com.br.opet.openet.R;
 import com.br.opet.openet.adapter.recyclerViewAdapter.FriendRequestRecyclerViewAdapter;
 import com.br.opet.openet.adapter.recyclerViewAdapter.FriendsRecyclerViewAdapter;
 import com.br.opet.openet.adapter.recyclerViewAdapter.FriendsSuggestRecyclerViewAdapter;
+import com.br.opet.openet.listener.FriendResponseListener;
 import com.br.opet.openet.model.CourseModel;
 import com.br.opet.openet.model.FriendModel;
+import com.br.opet.openet.service.FriendService;
+import com.br.opet.openet.service.impl.FriendServiceImpl;
+import com.br.opet.openet.util.ComponentUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FriendsFragment extends Fragment {
+
+    FriendServiceImpl friendService;
 
     RelativeLayout friendsListRelativeLayout;
     RelativeLayout friendRequestRelativeLayout;
@@ -40,8 +43,6 @@ public class FriendsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friends, container, false);
     }
 
@@ -51,50 +52,14 @@ public class FriendsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         instanciateObjects(getView());
-
-        //Preparing mock friendsList
-        List<FriendModel> friendsList = new ArrayList<FriendModel>();
-        friendsList.add(new FriendModel("Luiza Sonza", new CourseModel("Publicidade e Propaganda")));
-        friendsList.add(new FriendModel("Linus Torvalds", new CourseModel("Ciência da Computação")));
-        friendsList.add(new FriendModel("Átila Iamarino", new CourseModel("Biologia")));
-        friendsList.add(new FriendModel("Jair Bolsonaro", new CourseModel("Administração")));
-        friendsList.add(new FriendModel("Jeff Bezos", new CourseModel("Empreendedorismo")));
+        ComponentUtil.changeButtonBackgroundEnabled(view.getContext(), allFriendsButton);
+        ComponentUtil.changeButtonBackgroundDisabled(view.getContext(), friendRequestsButton);
+        ComponentUtil.changeButtonBackgroundDisabled(view.getContext(), exploreFriendsButton);
 
         //FriendsFragment
-        RecyclerView friendsListRecyclerView = view.findViewById(R.id.friendsListRecyclerView);
-        friendsListRecyclerView.setAdapter(new FriendsRecyclerViewAdapter(view.getContext(), friendsList));
-        friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        //Preparing mock friendsList
-        List<FriendModel> friendsRecommendedList = new ArrayList<FriendModel>();
-        friendsRecommendedList.add(new FriendModel("Luiza Sonza", new CourseModel("Publicidade e Propaganda")));
-        friendsRecommendedList.add(new FriendModel("Linus Torvalds", new CourseModel("Ciência da Computação")));
-        friendsRecommendedList.add(new FriendModel("Átila Iamarino", new CourseModel("Biologia")));
-        friendsRecommendedList.add(new FriendModel("Jair Bolsonaro", new CourseModel("Administração")));
-        friendsRecommendedList.add(new FriendModel("Jeff Bezos", new CourseModel("Empreendedorismo")));
-
-        //FriendsFragment
-        RecyclerView friendsSuggestRecommendedListRecyclerView = view.findViewById(R.id.exploreRecommendedFriendsListRecyclerView);
-        friendsSuggestRecommendedListRecyclerView.setAdapter(new FriendsSuggestRecyclerViewAdapter(view.getContext(), friendsRecommendedList));
-        friendsSuggestRecommendedListRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        //Preparing mock friendsList
-        List<FriendModel> friendsAllList = new ArrayList<FriendModel>();
-        friendsAllList.add(new FriendModel("Luiza Sonza", new CourseModel("Publicidade e Propaganda")));
-        friendsAllList.add(new FriendModel("Linus Torvalds", new CourseModel("Ciência da Computação")));
-        friendsAllList.add(new FriendModel("Átila Iamarino", new CourseModel("Biologia")));
-        friendsAllList.add(new FriendModel("Jair Bolsonaro", new CourseModel("Administração")));
-        friendsAllList.add(new FriendModel("Jeff Bezos", new CourseModel("Empreendedorismo")));
-        friendsAllList.add(new FriendModel("Luiza Sonza", new CourseModel("Publicidade e Propaganda")));
-        friendsAllList.add(new FriendModel("Linus Torvalds", new CourseModel("Ciência da Computação")));
-        friendsAllList.add(new FriendModel("Átila Iamarino", new CourseModel("Biologia")));
-        friendsAllList.add(new FriendModel("Jair Bolsonaro", new CourseModel("Administração")));
-        friendsAllList.add(new FriendModel("Jeff Bezos", new CourseModel("Empreendedorismo")));
-
-        //FriendsFragment
-        RecyclerView friendsSuggestAllListRecyclerView = view.findViewById(R.id.exploreFriendsListRecyclerView);
-        friendsSuggestAllListRecyclerView.setAdapter(new FriendsSuggestRecyclerViewAdapter(view.getContext(), friendsAllList));
-        friendsSuggestAllListRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        setupAllFriends(view);
+        setupCommonUsersSuggestion(view);
+        setupAllUsersSuggestion(view);
 
         //Preparing mock friendsList
         List<FriendModel> friendRequestsList = new ArrayList<FriendModel>();
@@ -117,6 +82,8 @@ public class FriendsFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void instanciateObjects(View v) {
+        friendService = new FriendServiceImpl(v.getContext());
+
         this.friendsListRelativeLayout = getView().findViewById(R.id.friendsListRelativeLayout);
         this.friendRequestRelativeLayout = getView().findViewById(R.id.friendRequestRelativeLayout);
         this.exploreFriendsRelativeLayout = getView().findViewById(R.id.exploreFriendsRelativeLayout);
@@ -130,14 +97,9 @@ public class FriendsFragment extends Fragment {
             exploreFriendsRelativeLayout.setVisibility(View.GONE);
             friendsListRelativeLayout.setVisibility(View.VISIBLE);
 
-            allFriendsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.openet_green));
-            allFriendsButton.setTextColor(getResources().getColor(R.color.white));
-
-            friendRequestsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.light_gray));
-            friendRequestsButton.setTextColor(getResources().getColor(R.color.unselect_button_text));
-            exploreFriendsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.light_gray));
-            exploreFriendsButton.setTextColor(getResources().getColor(R.color.unselect_button_text));
-
+            ComponentUtil.changeButtonBackgroundEnabled(v.getContext(), allFriendsButton);
+            ComponentUtil.changeButtonBackgroundDisabled(v.getContext(), friendRequestsButton);
+            ComponentUtil.changeButtonBackgroundDisabled(v.getContext(), exploreFriendsButton);
         });
 
         friendRequestsButton.setOnClickListener(v1 -> {
@@ -145,13 +107,9 @@ public class FriendsFragment extends Fragment {
             exploreFriendsRelativeLayout.setVisibility(View.GONE);
             friendsListRelativeLayout.setVisibility(View.GONE);
 
-            friendRequestsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.openet_green));
-            friendRequestsButton.setTextColor(getResources().getColor(R.color.white));
-
-            allFriendsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.light_gray));
-            allFriendsButton.setTextColor(getResources().getColor(R.color.unselect_button_text));
-            exploreFriendsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.light_gray));
-            exploreFriendsButton.setTextColor(getResources().getColor(R.color.unselect_button_text));
+            ComponentUtil.changeButtonBackgroundEnabled(v.getContext(), friendRequestsButton);
+            ComponentUtil.changeButtonBackgroundDisabled(v.getContext(), allFriendsButton);
+            ComponentUtil.changeButtonBackgroundDisabled(v.getContext(), exploreFriendsButton);
         });
 
         exploreFriendsButton.setOnClickListener(v1 -> {
@@ -159,15 +117,85 @@ public class FriendsFragment extends Fragment {
             exploreFriendsRelativeLayout.setVisibility(View.VISIBLE);
             friendsListRelativeLayout.setVisibility(View.GONE);
 
-            exploreFriendsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.openet_green));
-            exploreFriendsButton.setTextColor(getResources().getColor(R.color.white));
-
-            allFriendsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.light_gray));
-            allFriendsButton.setTextColor(getResources().getColor(R.color.unselect_button_text));
-            friendRequestsButton.setBackgroundTintList(v.getContext().getResources().getColorStateList(R.color.light_gray));
-            friendRequestsButton.setTextColor(getResources().getColor(R.color.unselect_button_text));
+            ComponentUtil.changeButtonBackgroundEnabled(v.getContext(), exploreFriendsButton);
+            ComponentUtil.changeButtonBackgroundDisabled(v.getContext(), allFriendsButton);
+            ComponentUtil.changeButtonBackgroundDisabled(v.getContext(), friendRequestsButton);
         });
 
+    }
+
+    private void setupAllFriends(View v) {
+        RecyclerView friendsListRecyclerView = v.findViewById(R.id.friendsListRecyclerView);
+        RelativeLayout nothingToSeeAllFriends = v.findViewById(R.id.nothingToSeeAllFriends);
+        try {
+            friendService.allFriends(new FriendResponseListener() {
+                @Override
+                public void onError(String message) {
+                    //TODO HANDLE ERROR
+                }
+                @Override
+                public void onResponse(FriendModel friendModelResponse) {
+
+                }
+                @Override
+                public void onResponseList(List<FriendModel> friendModelListResponse) {
+                    if(friendModelListResponse.size() > 0){
+                        friendsListRecyclerView.setAdapter(new FriendsRecyclerViewAdapter(v.getContext(), friendModelListResponse));
+                        friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                    } else {
+                        nothingToSeeAllFriends.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupAllUsersSuggestion(View v) {
+        RecyclerView friendsSuggestAllListRecyclerView = v.findViewById(R.id.exploreFriendsListRecyclerView);
+        try {
+            friendService.allUsersToFriendsSuggestion(new FriendResponseListener() {
+                @Override
+                public void onError(String message) {
+                    //TODO HANDLE ERROR
+                }
+                @Override
+                public void onResponse(FriendModel friendModelResponse) {
+
+                }
+                @Override
+                public void onResponseList(List<FriendModel> friendModelListResponse) {
+                    friendsSuggestAllListRecyclerView.setAdapter(new FriendsSuggestRecyclerViewAdapter(v.getContext(), friendModelListResponse));
+                    friendsSuggestAllListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupCommonUsersSuggestion(View v) {
+        RecyclerView friendsSuggestRecommendedListRecyclerView = v.findViewById(R.id.exploreRecommendedFriendsListRecyclerView);
+        try {
+            friendService.allUsersToFriendsSuggestion(new FriendResponseListener() {
+                @Override
+                public void onError(String message) {
+                    //TODO HANDLE ERROR
+                }
+                @Override
+                public void onResponse(FriendModel friendModelResponse) {
+
+                }
+                @Override
+                public void onResponseList(List<FriendModel> friendModelListResponse) {
+                    friendsSuggestRecommendedListRecyclerView.setAdapter(new FriendsSuggestRecyclerViewAdapter(v.getContext(), friendModelListResponse));
+                    friendsSuggestRecommendedListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

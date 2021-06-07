@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.dashboardFragments.PostsFragment">
+    android:visibility="gone">
 
     <RelativeLayout
         android:id="@+id/nothingToSeeRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/friendsImageView"
@@ -18,7 +16,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="false"
             android:layout_marginTop="150dp"
-            android:src="@drawable/ic_resource_void" />
+            android:src="@drawable/ic_friends" />
 
         <TextView
             android:id="@+id/noFriendsTextView"
@@ -27,8 +25,7 @@
             android:layout_below="@id/friendsImageView"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
-            android:layout_marginTop="15dp"
-            android:text="Nada para ver aqui!\nComece novas amizades para visualizar\no que seus amigos estão compartilhando"
+            android:text="Parece que você ainda não tem amigos 😭\nComece a explorar para realizar novas conexões "
             android:textAlignment="center" />
 
         <com.google.android.material.button.MaterialButton
@@ -41,17 +38,4 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/postsRelativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="20dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/postsRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

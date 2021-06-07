@@ -1,5 +1,7 @@
 package com.br.opet.openet.model.dto;
 
+import com.br.opet.openet.model.CourseModel;
+
 import java.io.Serializable;
 
 public class UserDTO implements Serializable {
@@ -10,7 +12,7 @@ public class UserDTO implements Serializable {
     String password;
     String email;
     String avatar;
-    String courseId;
+    CourseDTO course_id;
     String birth_date;
     String created_at;
     String updated_at;
@@ -72,12 +74,12 @@ public class UserDTO implements Serializable {
         this.birth_date = birth_date;
     }
 
-    public String getCourseId() {
-        return courseId;
+    public CourseDTO getCourse_id() {
+        return course_id;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public void setCourse_id(CourseDTO course_id) {
+        this.course_id = course_id;
     }
 
     public String getCreated_at() {

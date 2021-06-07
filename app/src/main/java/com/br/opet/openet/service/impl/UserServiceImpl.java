@@ -11,6 +11,7 @@ import com.br.opet.openet.listener.UserServiceResponseListener;
 import com.br.opet.openet.model.UserModel;
 import com.br.opet.openet.model.dto.RequestUserAuthDTO;
 import com.br.opet.openet.model.dto.UserRegisterDTO;
+import com.br.opet.openet.model.dto.UserDTO;
 import com.br.opet.openet.model.dto.UserResponseDTO;
 import com.br.opet.openet.service.UserService;
 import com.br.opet.openet.service.impl.defaultRequest.RequestSingleton;

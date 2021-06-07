@@ -1,5 +1,7 @@
 package com.br.opet.openet.model;
 
+import com.br.opet.openet.model.dto.CourseDTO;
+
 public class CourseModel {
 
     String id;
@@ -9,6 +11,14 @@ public class CourseModel {
     String updated;
 
     public CourseModel(){}
+
+    public CourseModel(CourseDTO courseDTO) {
+        this.id = courseDTO.getId();
+        this.course = courseDTO.getCourse();
+        this.timeCourse = courseDTO.getTime_course();
+        this.created = courseDTO.getCreated_at();
+        this.updated = courseDTO.getUpdated_at();
+    }
 
     public CourseModel(String courseName){
         this.course = courseName;

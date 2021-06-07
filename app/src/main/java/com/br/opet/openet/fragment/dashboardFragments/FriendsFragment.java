@@ -60,24 +60,7 @@ public class FriendsFragment extends Fragment {
         setupAllFriends(view);
         setupCommonUsersSuggestion(view);
         setupAllUsersSuggestion(view);
-
-        //Preparing mock friendsList
-        List<FriendModel> friendRequestsList = new ArrayList<FriendModel>();
-        friendRequestsList.add(new FriendModel("Luiza Sonza", new CourseModel("Publicidade e Propaganda")));
-        friendRequestsList.add(new FriendModel("Linus Torvalds", new CourseModel("Ciência da Computação")));
-        friendRequestsList.add(new FriendModel("Átila Iamarino", new CourseModel("Biologia")));
-        friendRequestsList.add(new FriendModel("Jair Bolsonaro", new CourseModel("Administração")));
-        friendRequestsList.add(new FriendModel("Jeff Bezos", new CourseModel("Empreendedorismo")));
-        friendRequestsList.add(new FriendModel("Luiza Sonza", new CourseModel("Publicidade e Propaganda")));
-        friendRequestsList.add(new FriendModel("Linus Torvalds", new CourseModel("Ciência da Computação")));
-        friendRequestsList.add(new FriendModel("Átila Iamarino", new CourseModel("Biologia")));
-        friendRequestsList.add(new FriendModel("Jair Bolsonaro", new CourseModel("Administração")));
-        friendRequestsList.add(new FriendModel("Jeff Bezos", new CourseModel("Empreendedorismo")));
-
-        //FriendsFragment
-        RecyclerView friendRequestsListRecyclerView = view.findViewById(R.id.friendRequestListRecyclerView);
-        friendRequestsListRecyclerView.setAdapter(new FriendRequestRecyclerViewAdapter(view.getContext(), friendRequestsList));
-        friendRequestsListRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        setupFriendRequests(view);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -144,6 +127,35 @@ public class FriendsFragment extends Fragment {
                         friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
                     } else {
                         nothingToSeeAllFriends.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupFriendRequests(View v) {
+        //FriendsFragment
+        RecyclerView friendRequestsListRecyclerView = v.findViewById(R.id.friendRequestListRecyclerView);
+        RelativeLayout nothingToSeeFriendRequest = v.findViewById(R.id.nothingToSeeFriendRequest);
+        try {
+            friendService.allFriendsRequests(new FriendResponseListener() {
+                @Override
+                public void onError(String message) {
+                    //TODO HANDLE ERROR
+                }
+                @Override
+                public void onResponse(FriendModel friendModelResponse) {
+
+                }
+                @Override
+                public void onResponseList(List<FriendModel> friendModelListResponse) {
+                    if(friendModelListResponse.size() > 0){
+                        friendRequestsListRecyclerView.setAdapter(new FriendRequestRecyclerViewAdapter(v.getContext(), friendModelListResponse));
+                        friendRequestsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                    } else {
+                        nothingToSeeFriendRequest.setVisibility(View.VISIBLE);
                     }
                 }
             });

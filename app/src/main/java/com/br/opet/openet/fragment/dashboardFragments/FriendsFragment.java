@@ -195,10 +195,12 @@ public class FriendsFragment extends Fragment {
                 public void onError(String message) {
                     //TODO HANDLE ERROR
                 }
+
                 @Override
                 public void onResponse(FriendModel friendModelResponse) {
 
                 }
+
                 @Override
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
                     friendsSuggestRecommendedListRecyclerView.setAdapter(new FriendsSuggestRecyclerViewAdapter(v.getContext(), friendModelListResponse));
@@ -209,5 +211,4 @@ public class FriendsFragment extends Fragment {
             e.printStackTrace();
         }
     }
-
 }

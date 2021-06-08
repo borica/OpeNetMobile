@@ -41,8 +41,9 @@ Vai rejeitar o pedido de amizade
 
 public class FriendModel {
 
+    String id;
     String name;
-    String image;
+    String avatar;
     CourseModel course;
 
     public FriendModel() {}
@@ -51,6 +52,21 @@ public class FriendModel {
         this.name = name;
         this.image = image;
         this.course = course;
+    }
+
+    public FriendModel(String id, String name, String image, CourseModel course) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.course = course;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -23,9 +23,9 @@ public class CourseModel {
     public CourseModel(CourseDTO courseDTO) {
         this.id = courseDTO.getId();
         this.course = courseDTO.getCourse();
-        this.timeCourse = courseDTO.getTime_course();
-        this.created = courseDTO.getCreated_at();
-        this.updated = courseDTO.getUpdated_at();
+        this.time_course = courseDTO.getTime_course();
+        this.created_at = courseDTO.getCreated_at();
+        this.updated_at = courseDTO.getUpdated_at();
     }
 
     public CourseModel(String courseName){

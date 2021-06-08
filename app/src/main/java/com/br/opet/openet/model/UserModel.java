@@ -25,7 +25,7 @@ public class UserModel implements Serializable {
     public UserModel(String name, CourseModel couseModel, String avatarUrl ){
         this.name = name;
         this.couseModel = couseModel;
-        this.avatarUrl = avatarUrl;
+        this.avatar_url = avatarUrl;
     }
 
     public UserModel(String username, String password){

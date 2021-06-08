@@ -78,11 +78,11 @@ public class FriendModel {
     }
 
     public String getImage() {
-        return image;
+        return avatar;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(String avatar) {
+        this.avatar = avatar;
     }
 
     public CourseModel getCourse() {

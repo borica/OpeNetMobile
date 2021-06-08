@@ -15,9 +15,9 @@ public class UserModel implements Serializable {
     String avatar;
     CourseModel couseModel;
     Date birth_date;
-    Date created;
-    Date update;
-    String avatarUrl;
+    Date created_at;
+    Date updated_at;
+    String avatar_url;
     String token;
 
     public UserModel(){}
@@ -25,7 +25,7 @@ public class UserModel implements Serializable {
     public UserModel(String name, CourseModel couseModel, String avatarUrl ){
         this.name = name;
         this.couseModel = couseModel;
-        this.avatarUrl = avatarUrl;
+        this.avatar_url = avatarUrl;
     }
 
     public UserModel(String username, String password){
@@ -44,11 +44,11 @@ public class UserModel implements Serializable {
         //this.couseModel = userResponseDTO.getUser().get ;
         //TODO Parse birth_date to Date
         //this.birth_date;
-        //TODO Parse created to Date
-        //this.created;
-        //TODO Parse update to Date
-        //this.update;
-        this.avatarUrl = userResponseDTO.getUser().getAvatar_url();
+        //TODO Parse created_at to Date
+        //this.created_at;
+        //TODO Parse updated_at to Date
+        //this.updated_at;
+        this.avatar_url = userResponseDTO.getUser().getAvatar_url();
         this.token = userResponseDTO.getToken();
     }
 
@@ -116,28 +116,28 @@ public class UserModel implements Serializable {
         this.birth_date = birth_date;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getcreated_at() {
+        return created_at;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setcreated_at(Date created_at) {
+        this.created_at = created_at;
     }
 
-    public Date getUpdate() {
-        return update;
+    public Date getupdated_at() {
+        return updated_at;
     }
 
-    public void setUpdate(Date update) {
-        this.update = update;
+    public void setupdated_at(Date updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getavatar_url() {
+        return avatar_url;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setavatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
     }
 
     public String getToken() {
@@ -146,5 +146,23 @@ public class UserModel implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", couseModel=" + couseModel +
+                ", birth_date=" + birth_date +
+                ", created_at=" + created_at +
+                ", updated_at=" + updated_at +
+                ", avatar_url='" + avatar_url + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

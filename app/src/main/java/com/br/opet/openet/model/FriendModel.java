@@ -47,8 +47,9 @@ public class FriendModel {
 
     public FriendModel() {}
 
-    public FriendModel(String name, CourseModel course) {
+    public FriendModel(String name, String image, CourseModel course) {
         this.name = name;
+        this.image = image;
         this.course = course;
     }
 

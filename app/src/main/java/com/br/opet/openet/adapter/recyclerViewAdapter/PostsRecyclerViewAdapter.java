@@ -42,8 +42,8 @@ public class PostsRecyclerViewAdapter extends RecyclerView.Adapter<PostsRecycler
     @Override
     public void onBindViewHolder(@NonNull PostsRecyclerViewAdapter.MyViewHolder holder, int position) {
 
-        if(postArrayList.get(position).getUserOwner().getAvatarUrl() != null) {
-            Picasso.get().load(postArrayList.get(position).getUserOwner().getAvatarUrl()).into(holder.avatarImageView);
+        if(postArrayList.get(position).getUserOwner().getavatar_url() != null) {
+            Picasso.get().load(postArrayList.get(position).getUserOwner().getavatar_url()).into(holder.avatarImageView);
         }
 
         if(postArrayList.get(position).getPostImageURL() != null) {

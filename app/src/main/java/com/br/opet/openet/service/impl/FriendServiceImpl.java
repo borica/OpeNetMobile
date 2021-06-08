@@ -88,7 +88,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
                         UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getName(), new CourseModel("Curso Placeholder")));
+                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
@@ -114,7 +114,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
                         UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getName(), new CourseModel("Curso Placeholder")));
+                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
@@ -125,8 +125,29 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
     }
 
     @Override
-    public void allFriendsRequests(FriendResponseListener sessionResponseListener) throws Exception {
-        //TODO
+    public void allFriendsRequests(FriendResponseListener responseListener) throws Exception {
+        String token = appContext.getLoggedUser().getToken();
+        doGet(mContext, (HTTPUtils.HOST + FriendRoutesEnum.PEDING_FRIEND_REQUESTS.getRoute()), token, new RestResponseListener() {
+            @Override
+            public void onError(String message) {
+                responseListener.onError(message);
+            }
+            @Override
+            public void onResponse(JSONObject jsonResponse) {
+                try {
+                    List<FriendModel> usersToSuggestList = new ArrayList<>();
+                    JSONArray usersToSuggestJsonArray = jsonResponse.getJSONArray("friends");
+                    for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
+                        UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
+                        if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
+                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
+                    }
+                    responseListener.onResponseList(usersToSuggestList);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -145,7 +166,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
                         UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getName(), new CourseModel("Curso Placeholder")));
+                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {

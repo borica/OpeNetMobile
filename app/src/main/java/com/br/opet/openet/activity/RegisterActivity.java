@@ -159,7 +159,7 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
 
     private DatePickerDialog.OnDateSetListener mDateSetListener =
             (view, year, monthOfYear, dayOfMonth) -> {
-                String data = dayOfMonth + "/" + (monthOfYear < 10 ? "0" : "") + (monthOfYear + 1) + "/" + year;
+                String data = dayOfMonth + "/" + (monthOfYear < 9 ? "0" : "") + (monthOfYear + 1) + "/" + year;
                 nascimento.setText(data);
             };
 

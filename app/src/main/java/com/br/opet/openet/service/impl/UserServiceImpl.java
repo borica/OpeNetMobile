@@ -33,8 +33,10 @@ public class UserServiceImpl extends DefaultRestClient implements UserService {
     @Override
     public void authenticate(Context mContext, RequestUserAuthDTO RequestUserAuth, final UserServiceResponseListener sessionResponseListener) throws Exception {
         setupClient();
+        setupClient();
         final JSONObject newUserRequest  = new JSONObject(gson.toJson(RequestUserAuth));
-        doPost(mContext, newUserRequest, new RestResponseListener() {
+        String token = null;
+        doPost(mContext, (HTTPUtils.HOST + SessionRoutesEnum.SESSION_AUTH_ROUTE.getRoute()), null, newUserRequest, new RestResponseListener() {
             @Override
             public void onError(String message) {
                 sessionResponseListener.onError(message);

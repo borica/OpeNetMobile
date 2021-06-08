@@ -154,4 +154,10 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
             }
         });
     }
+
+    public void postAcceptFriendRequest(String id, FriendResponseListener responseListener) {
+        String token = appContext.getLoggedUser().getToken();
+
+        //doPost(mContext, HTTPUtils.HOST + FriendRoutesEnum.ACCEPT_USER_AS_FRIEND.getRoute(), );
+    }
 }

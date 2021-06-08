@@ -25,11 +25,11 @@ public class DefaultRestClient {
             gson = new Gson();
     }
 
-    protected void doPost(Context mContext, JSONObject request, RestResponseListener responseListener) {
+    protected void doPost(Context mContext, String route, String userToken, JSONObject request, RestResponseListener responseListener) {
 
         RequestQueue requestQueue = RequestSingleton.getInstance(mContext).getRequestQueue();
 
-        JsonObjectRequest makeUserRequest = new JsonObjectRequest(Request.Method.POST, (HTTPUtils.HOST + SessionRoutesEnum.SESSION_AUTH_ROUTE.getRoute()), request, responseListener::onResponse, error -> {
+        JsonObjectRequest makeUserRequest = new JsonObjectRequest(Request.Method.POST, route, request, responseListener::onResponse, error -> {
             String cause;
             if(error.getMessage() == null) {
                 if(error.networkResponse != null)
@@ -40,7 +40,18 @@ public class DefaultRestClient {
                 cause = error.getMessage();
             }
             responseListener.onError(cause);
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+
+                if (userToken != null && userToken.length() != 0) {
+                    headers.put("Authorization", "Bearer " + userToken);
+                }
+
+                return headers;
+            }
+        };
 
         requestQueue.add(makeUserRequest);
     }

@@ -48,16 +48,16 @@ public class FriendModel {
 
     public FriendModel() {}
 
-    public FriendModel(String name, String image, CourseModel course) {
+    public FriendModel(String name, String avatar, CourseModel course) {
         this.name = name;
-        this.image = image;
+        this.avatar = avatar;
         this.course = course;
     }
 
-    public FriendModel(String id, String name, String image, CourseModel course) {
+    public FriendModel(String id, String name, String avatar, CourseModel course) {
         this.id = id;
         this.name = name;
-        this.image = image;
+        this.avatar = avatar;
         this.course = course;
     }
 

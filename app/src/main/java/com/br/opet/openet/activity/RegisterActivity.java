@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -63,9 +64,9 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
                             password.getText().toString(),
                             email.getText().toString(),
                             cursos.stream().filter(c -> c.getCourse().equals(curso.getSelectedItem().toString())).findFirst().get().getId(),
-                            splits[2] + "-" + splits[1] + "-" + splits[0] + "T00:00:00.000Z"
+                            splits[2] + "-" + splits[1] + "-" + splits[0]
                     );
-
+                    
                     try {
                         userService.createUser(this, requestUserAuth, new UserServiceResponseListener() {
                             @Override

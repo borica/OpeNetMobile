@@ -4,7 +4,7 @@ public enum FriendRoutesEnum {
 
     LIST_ALL_FRIENDS("friends"),
     ALL_USERS_SUGGEST("users/approved"),
-    COMMON_USERS_SUGGEST("users/"),
+    COMMON_USERS_SUGGEST("users"),
     PEDING_FRIEND_REQUESTS("friends/pending"),
     INVITE_USER_AS_FRIEND("friends/invite"),
     ACCEPT_USER_AS_FRIEND("friends/accept"),

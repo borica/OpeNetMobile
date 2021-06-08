@@ -190,7 +190,7 @@ public class FriendsFragment extends Fragment {
     private void setupCommonUsersSuggestion(View v) {
         RecyclerView friendsSuggestRecommendedListRecyclerView = v.findViewById(R.id.exploreRecommendedFriendsListRecyclerView);
         try {
-            friendService.allUsersToFriendsSuggestion(new FriendResponseListener() {
+            friendService.commonUsersToFriendsSuggestion(new FriendResponseListener() {
                 @Override
                 public void onError(String message) {
                     //TODO HANDLE ERROR

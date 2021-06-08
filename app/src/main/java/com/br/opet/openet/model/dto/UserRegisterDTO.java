@@ -8,7 +8,7 @@ public class UserRegisterDTO implements Serializable {
     String username;
     String password;
     String email;
-    String courseId;
+    String course_id;
     String birth_date;
 
     public UserRegisterDTO(String name, String username, String password, String email, String courseId, String birth_date) {
@@ -16,7 +16,7 @@ public class UserRegisterDTO implements Serializable {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.courseId = courseId;
+        this.course_id = courseId;
         this.birth_date = birth_date;
     }
 
@@ -52,12 +52,12 @@ public class UserRegisterDTO implements Serializable {
         this.email = email;
     }
 
-    public String getCourseId() {
-        return courseId;
+    public String getCourse_id() {
+        return course_id;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public void setCourse_id(String course_id) {
+        this.course_id = course_id;
     }
 
     public String getBirth_date() {

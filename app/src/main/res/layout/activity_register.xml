@@ -7,144 +7,212 @@
     android:background="#78e08f"
     tools:context=".activity.RegisterActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:src="@drawable/text_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginHorizontal="20dp"
         android:background="@drawable/roundedbackground"
-        android:paddingHorizontal="20dp">
+        android:paddingHorizontal="20dp"
+        android:elevation="5dp">
 
         <LinearLayout
-            android:id="@+id/completeName"
-            android:layout_width="fill_parent"
+            android:id="@+id/nameInputLinearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:layout_marginTop="10dp">
 
-            <EditText
-                android:id="@+id/nameEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:hint="Nome"
-                android:minWidth="165dp" />
-
-            <EditText
-                android:id="@+id/lastNameEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Sobrenome"
-                android:minWidth="165dp" />
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/userNameEditText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/completeName"
-            android:hint="Usuário"
-            android:minWidth="300dp" />
-
-        <EditText
-            android:id="@+id/emailEditText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/userNameEditText"
-            android:hint="E-mail"
-            android:minWidth="300dp" />
-
-        <LinearLayout
-            android:id="@+id/coursesSpinnerGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="25dp"
-            android:layout_marginLeft="5dp"
-            android:layout_below="@+id/emailEditText"
-            android:layout_marginStart="5dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:text="Curso"
-                android:textSize="17sp"
-                android:layout_marginRight="5dp"
-                android:layout_marginEnd="5dp" />
-
-            <Spinner
-                android:id="@+id/coursesSpinner"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/firstNameTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/courses"
-                android:prompt="@string/courses_prompt" />
+                app:startIconDrawable="@drawable/custom_person_icon"
+                app:startIconContentDescription="Username"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Nome"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userNameTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/ic_assignment"
+                app:startIconContentDescription="Username"
+                android:layout_below="@+id/firstNameTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Username"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/faculStatus"
-            android:layout_width="fill_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailTextInputLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/coursesSpinnerGroup"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            app:startIconDrawable="@drawable/ic_email"
+            app:startIconContentDescription="Username"
+            android:layout_below="@+id/nameInputLinearLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Email"
+            android:layout_marginTop="10dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="49dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    android:text="Periodo"
-                    android:textSize="17sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <NumberPicker
-                    android:layout_width="wrap_content"
-                    android:layout_height="49dp"
-                    android:minWidth="100dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="49dp"
-                android:layout_marginLeft="25dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_gravity="center"
-                    android:text="Ano Que\nIniciou"
-                    android:textSize="17sp" />
-
-                <NumberPicker
-                    android:layout_width="wrap_content"
-                    android:layout_height="49dp"
-                    android:minWidth="100dp" />
-            </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_below="@+id/faculStatus"
-            android:layout_height="49dp"
-            android:layout_marginLeft="25dp">
+            android:id="@+id/dtNascimentoCoursesLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailTextInputLayout"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:layout_marginRight="30dp"
-                android:text="Data de Nascimento"
-                android:textSize="17sp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/coursesSpinnerTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/ic_curso"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="Curso"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp">
 
-            <DatePicker
-                android:layout_width="wrap_content"
-                android:layout_height="49dp"
-                android:background="#3A3939"
-                android:calendarTextColor="#3A3939"
-                android:headerBackground="@android:color/transparent"
-                android:minWidth="100dp" />
+                <AutoCompleteTextView
+                    android:id="@+id/cursoAutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
+                    android:maxLines="1"
+                    android:focusable="false"
+                     />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dtNascimentoTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/ic_date"
+                app:startIconContentDescription="Username"
+                android:layout_below="@+id/nameInputLinearLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="Aniversário"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dtNascimentoEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:focusable="false"
+                    />
+
+<!--                style="@android:style/Widget.Material.DatePicker"-->
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <EditText-->
+
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="49dp"-->
+<!--                android:editable="false"-->
+<!--                android:headerBackground="@android:color/transparent"-->
+<!--                android:minWidth="100dp"-->
+<!--                android:background="@drawable/custom_input"-->
+<!--                android:paddingVertical="5dp"-->
+<!--                android:paddingEnd="12dp"-->
+<!--                android:paddingRight="12dp"-->
+<!--                android:paddingStart="12dp"-->
+<!--                android:paddingLeft="12dp"-->
+<!--                android:scrollbarStyle="outsideInset" />-->
+
         </LinearLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconContentDescription="Username"
+            android:layout_below="@+id/dtNascimentoCoursesLinearLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Senha"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+
+            <!--                style="@android:style/Widget.Material.DatePicker"-->
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/cpasswordTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconContentDescription="Username"
+            android:layout_below="@+id/passwordTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:hint="Confirme sua senha"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
+
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/cpasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"/>
+
+            <!--                style="@android:style/Widget.Material.DatePicker"-->
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cpasswordTextInputLayout"
+            android:layout_marginHorizontal="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:text="cadastrar"/>
 
     </RelativeLayout>
 

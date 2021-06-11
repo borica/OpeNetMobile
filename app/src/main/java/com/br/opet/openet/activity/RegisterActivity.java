@@ -6,12 +6,10 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -21,21 +19,19 @@ import com.br.opet.openet.listener.CourseServiceResponseListener;
 import com.br.opet.openet.listener.UserServiceResponseListener;
 import com.br.opet.openet.model.CourseModel;
 import com.br.opet.openet.model.UserModel;
-import com.br.opet.openet.model.dto.RequestUserAuthDTO;
 import com.br.opet.openet.model.dto.UserRegisterDTO;
 import com.br.opet.openet.service.impl.CourseServiceImpl;
 import com.br.opet.openet.service.impl.UserServiceImpl;
-import com.google.gson.Gson;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class RegisterActivity extends NoBarActivity implements View.OnClickListener {
 
-    private EditText name, userName, email, password, confirmPassword;
+    private TextInputEditText name, userName, email, password, confirmPassword, nascimento;
     private Button register;
-    private EditText nascimento;
-    private Spinner curso;
+    private AutoCompleteTextView curso;
     private ArrayList<CourseModel> cursos;
 
     private UserServiceImpl userService;
@@ -63,7 +59,7 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
                             userName.getText().toString(),
                             password.getText().toString(),
                             email.getText().toString(),
-                            cursos.stream().filter(c -> c.getCourse().equals(curso.getSelectedItem().toString())).findFirst().get().getId(),
+                            cursos.stream().filter(c -> c.getCourse().equals(curso.getEditableText().toString())).findFirst().get().getId(),
                             splits[2] + "-" + splits[1] + "-" + splits[0]
                     );
                     
@@ -176,7 +172,7 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
         nascimento = findViewById(R.id.dtNascimentoEditText);
         nascimento.setOnClickListener(this);
 
-        curso = findViewById(R.id.coursesSpinner);
+        curso = findViewById(R.id.cursoAutoCompleteTextView);
         userService = new UserServiceImpl();
         loadCourses();
     }
@@ -187,13 +183,21 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
             service.listCourses(this, new CourseServiceResponseListener() {
                 @Override
                 public void onError(String message) {
+                    cursos = new ArrayList<>();
+                    cursos.add(new CourseModel("1", "Licenciatura"));
+                    cursos.add(new CourseModel("2", "Padaria"));
+                    cursos.add(new CourseModel("3", "Taxista"));
+                    cursos.add(new CourseModel("4", "Marceneiro"));
+
+                    ArrayAdapter<CourseModel> adapter = new ArrayAdapter<>(RegisterActivity.this, R.layout.list_item, cursos);
+                    curso.setAdapter(adapter);
                 }
 
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onResponse(ArrayList<CourseModel> courses) {
                     cursos = courses;
-                    ArrayAdapter<CourseModel> adapter = new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_spinner_item, cursos);
+                    ArrayAdapter<CourseModel> adapter = new ArrayAdapter<>(RegisterActivity.this, R.layout.list_item, cursos);
                     curso.setAdapter(adapter);
                 }
             });

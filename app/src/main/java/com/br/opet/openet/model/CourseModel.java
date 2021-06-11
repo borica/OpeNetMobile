@@ -20,6 +20,11 @@ public class CourseModel {
 
     public CourseModel(){}
 
+    public CourseModel(String id, String course) {
+        this.id = id;
+        this.course = course;
+    }
+
     public CourseModel(CourseDTO courseDTO) {
         this.id = courseDTO.getId();
         this.course = courseDTO.getCourse();

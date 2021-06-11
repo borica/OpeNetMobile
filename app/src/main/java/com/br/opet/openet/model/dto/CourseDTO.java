@@ -3,7 +3,6 @@ package com.br.opet.openet.model.dto;
 public class CourseDTO {
 
     String id;
-    String course_id;
     String course;
     String time_course;
     String created_at;
@@ -15,14 +14,6 @@ public class CourseDTO {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getCourse_id() {
-        return course_id;
-    }
-
-    public void setCourse_id(String course_id) {
-        this.course_id = course_id;
     }
 
     public String getCourse() {

@@ -45,6 +45,7 @@ public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<Frien
     public void onBindViewHolder(@NonNull FriendRequestRecyclerViewAdapter.MyViewHolder holder, int position) {
         holder.friendNameTextView.setText(friendsArrayList.get(position).getName());
         holder.courseNameTextView.setText(friendsArrayList.get(position).getCourse().getCourse());
+        holder.friendId.setText(friendsArrayList.get(position).getId());
     }
 
     @Override
@@ -64,6 +65,7 @@ public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<Frien
             friendNameTextView = itemView.findViewById(R.id.friendNameTextView);
             courseNameTextView = itemView.findViewById(R.id.friendCourseTextView);
             acceptFriendButton = itemView.findViewById(R.id.acceptFriendButton);
+            friendId           = itemView.findViewById(R.id.friendId);
 
             acceptFriendButton.setOnClickListener(new View.OnClickListener() {
                 @Override

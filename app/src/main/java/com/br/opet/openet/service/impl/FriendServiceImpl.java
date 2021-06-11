@@ -9,6 +9,7 @@ import com.br.opet.openet.listener.FriendResponseListener;
 import com.br.opet.openet.listener.RestResponseListener;
 import com.br.opet.openet.model.CourseModel;
 import com.br.opet.openet.model.FriendModel;
+import com.br.opet.openet.model.dto.FriendRequestDTO;
 import com.br.opet.openet.model.dto.UserDTO;
 import com.br.opet.openet.service.FriendService;
 import com.br.opet.openet.service.impl.defaultRequest.DefaultRestClient;
@@ -139,9 +140,9 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     List<FriendModel> usersToSuggestList = new ArrayList<>();
                     JSONArray usersToSuggestJsonArray = jsonResponse.getJSONArray("friends");
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
-                        UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
-                        if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
+                        FriendRequestDTO friendRequestDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), FriendRequestDTO.class);
+                        if (!appContext.getLoggedUser().getId().equals(friendRequestDTO.getUser().getId()))
+                            usersToSuggestList.add(new FriendModel(friendRequestDTO.getId(), friendRequestDTO.getUser().getName(), friendRequestDTO.getUser().getAvatar_url(), new CourseModel(friendRequestDTO.getUser().getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
@@ -165,9 +166,9 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     List<FriendModel> usersToSuggestList = new ArrayList<>();
                     JSONArray usersToSuggestJsonArray = jsonResponse.getJSONArray("friends");
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
-                        UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
-                        if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
+                        FriendRequestDTO friendRequestDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), FriendRequestDTO.class);
+                        if (!appContext.getLoggedUser().getId().equals(friendRequestDTO.getUser().getId()))
+                            usersToSuggestList.add(new FriendModel(friendRequestDTO.getUser().getName(), friendRequestDTO.getUser().getAvatar_url(), new CourseModel(friendRequestDTO.getUser().getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {

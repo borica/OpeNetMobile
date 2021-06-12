@@ -90,7 +90,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
                         UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
+                            usersToSuggestList.add(new FriendModel(userDTO.getId(), userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
@@ -116,7 +116,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
                         UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
+                            usersToSuggestList.add(new FriendModel(userDTO.getId(), userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
@@ -176,6 +176,25 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                 }
             }
         });
+    }
+
+    public void sendFriendRequest(String id, FriendRequestListener responseListener) {
+        try {
+            String token = appContext.getLoggedUser().getToken();
+            final JSONObject bodyRequest  = new JSONObject();
+            bodyRequest.put("friend_id", id);
+
+            doPost(mContext, HTTPUtils.HOST + FriendRoutesEnum.INVITE_USER_AS_FRIEND.getRoute(), token, bodyRequest, new RestResponseListener() {
+                @Override
+                public void onError(String message) {
+                    responseListener.onError(message);
+                }
+                @Override
+                public void onResponse(JSONObject jsonResponse) {}
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void postAcceptFriendRequest(String id, FriendRequestListener responseListener) {

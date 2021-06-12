@@ -2,11 +2,13 @@ package com.br.opet.openet.fragment.dashboardFragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +33,35 @@ import java.util.List;
 
 public class FriendsFragment extends Fragment {
 
+    public static final String TAG = FriendsFragment.class.getName();
+
     FriendServiceImpl friendService;
+
+    //Lists displayed in each friends layout
+    List<FriendModel> allFriendsList;
+    List<FriendModel> friendRequestsList;
+    List<FriendModel> commonUsersToSuggestList;
+    List<FriendModel> allUsersToSuggestList;
+
+    //All Friends related components
+    RecyclerView friendsListRecyclerView;
+    FriendsRecyclerViewAdapter friendsListRecyclerViewAdapter;
+    RelativeLayout nothingToSeeAllFriends;
+
+    //All Friend Requests related components
+    RecyclerView friendRequestsListRecyclerView;
+    FriendRequestRecyclerViewAdapter friendRequestsListRecyclerViewAdapter;
+    RelativeLayout nothingToSeeFriendRequest;
+
+    //All Friend Suggestion related components
+    RelativeLayout allUsersToSuggestRelativeLayout;
+    RecyclerView friendsSuggestAllListRecyclerView;
+    FriendsSuggestRecyclerViewAdapter friendsSuggestAllListRecyclerViewAdapter;
+
+    //Common Friend Suggestion related components
+    RelativeLayout recommendedFriendsRelativeLayout;
+    RecyclerView friendsSuggestRecommendedListRecyclerView;
+    FriendsSuggestRecyclerViewAdapter friendsSuggestRecommendedListRecyclerViewAdapter;
 
     RelativeLayout friendsListRelativeLayout;
     RelativeLayout friendRequestRelativeLayout;
@@ -51,16 +81,12 @@ public class FriendsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        instanciateObjects(getView());
-        ComponentUtil.changeButtonBackgroundEnabled(view.getContext(), allFriendsButton);
+        instanciateObjects(view);
+
+        //Setting buttons for first time interaction (All friends button will be enable by default)
         ComponentUtil.changeButtonBackgroundDisabled(view.getContext(), friendRequestsButton);
         ComponentUtil.changeButtonBackgroundDisabled(view.getContext(), exploreFriendsButton);
-
-        //FriendsFragment
-        setupAllFriends(view);
-        setupCommonUsersSuggestion(view);
-        setupAllUsersSuggestion(view);
-        setupFriendRequests(view);
+        setupFriendsLists(view);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -105,16 +131,35 @@ public class FriendsFragment extends Fragment {
             ComponentUtil.changeButtonBackgroundDisabled(v.getContext(), friendRequestsButton);
         });
 
+        allFriendsList = new ArrayList<>();
+        friendRequestsList = new ArrayList<>();
+        commonUsersToSuggestList = new ArrayList<>();
+        allUsersToSuggestList = new ArrayList<>();
+    }
+
+    private void setupFriendsLists(View view){
+        setupAllFriends(view);
+        setupFriendRequests(view);
+        setupCommonUsersSuggestion(view);
+        setupAllUsersSuggestion(view);
     }
 
     private void setupAllFriends(View v) {
-        RecyclerView friendsListRecyclerView = v.findViewById(R.id.friendsListRecyclerView);
-        RelativeLayout nothingToSeeAllFriends = v.findViewById(R.id.nothingToSeeAllFriends);
+        friendsListRecyclerView = v.findViewById(R.id.friendsListRecyclerView);
+        friendsListRecyclerViewAdapter = new FriendsRecyclerViewAdapter(v.getContext(), allFriendsList);
+        friendsListRecyclerView.setAdapter(friendsListRecyclerViewAdapter);
+        friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        nothingToSeeAllFriends = v.findViewById(R.id.nothingToSeeAllFriends);
+        callAllFriendsService();
+    }
+
+    private void callAllFriendsService(){
         try {
             friendService.allFriends(new FriendResponseListener() {
                 @Override
                 public void onError(String message) {
-                    //TODO HANDLE ERROR
+                    ComponentUtil.sendToast(FriendsFragment.this.getContext(), message);
+                    Log.e(TAG, message);
                 }
                 @Override
                 public void onResponse(FriendModel friendModelResponse) {
@@ -123,27 +168,39 @@ public class FriendsFragment extends Fragment {
                 @Override
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
                     if(friendModelListResponse.size() > 0){
-                        friendsListRecyclerView.setAdapter(new FriendsRecyclerViewAdapter(v.getContext(), friendModelListResponse));
-                        friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                        allFriendsList = friendModelListResponse;
+                        friendsListRecyclerViewAdapter.setItems(allFriendsList);
+                        friendsListRecyclerViewAdapter.notifyDataSetChanged();
+                        friendsListRecyclerView.setVisibility(View.VISIBLE);
+                        nothingToSeeAllFriends.setVisibility(View.GONE);
                     } else {
+                        friendsListRecyclerView.setVisibility(View.GONE);
                         nothingToSeeAllFriends.setVisibility(View.VISIBLE);
                     }
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
     }
 
     private void setupFriendRequests(View v) {
         //FriendsFragment
-        RecyclerView friendRequestsListRecyclerView = v.findViewById(R.id.friendRequestListRecyclerView);
-        RelativeLayout nothingToSeeFriendRequest = v.findViewById(R.id.nothingToSeeFriendRequest);
+        friendRequestsListRecyclerView = v.findViewById(R.id.friendRequestListRecyclerView);
+        nothingToSeeFriendRequest = v.findViewById(R.id.nothingToSeeFriendRequest);
+        friendRequestsListRecyclerViewAdapter = new FriendRequestRecyclerViewAdapter(v.getContext(), friendRequestsList);
+        friendRequestsListRecyclerView.setAdapter(friendRequestsListRecyclerViewAdapter);
+        friendRequestsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        callFriendRequestService();
+    }
+
+    private void callFriendRequestService(){
         try {
             friendService.allFriendsRequests(new FriendResponseListener() {
                 @Override
                 public void onError(String message) {
-                    //TODO HANDLE ERROR
+                    ComponentUtil.sendToast(FriendsFragment.this.getContext(), message);
+                    Log.e(TAG, message);
                 }
                 @Override
                 public void onResponse(FriendModel friendModelResponse) {
@@ -152,25 +209,38 @@ public class FriendsFragment extends Fragment {
                 @Override
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
                     if(friendModelListResponse.size() > 0){
-                        friendRequestsListRecyclerView.setAdapter(new FriendRequestRecyclerViewAdapter(v.getContext(), friendModelListResponse));
-                        friendRequestsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                        friendRequestsList = friendModelListResponse;
+                        friendRequestsListRecyclerViewAdapter.setItems(friendRequestsList);
+                        friendRequestsListRecyclerViewAdapter.notifyDataSetChanged();
+                        friendRequestsListRecyclerView.setVisibility(View.VISIBLE);
+                        nothingToSeeFriendRequest.setVisibility(View.GONE);
                     } else {
+                        friendRequestsListRecyclerView.setVisibility(View.GONE);
                         nothingToSeeFriendRequest.setVisibility(View.VISIBLE);
                     }
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
     }
 
     private void setupAllUsersSuggestion(View v) {
-        RecyclerView friendsSuggestAllListRecyclerView = v.findViewById(R.id.exploreFriendsListRecyclerView);
+        allUsersToSuggestRelativeLayout = v.findViewById(R.id.allUsersToSuggestRelativeLayout);
+        friendsSuggestAllListRecyclerView = v.findViewById(R.id.exploreFriendsListRecyclerView);
+        friendsSuggestAllListRecyclerViewAdapter = new FriendsSuggestRecyclerViewAdapter(v.getContext(), this.friendService, allUsersToSuggestList);
+        friendsSuggestAllListRecyclerView.setAdapter(friendsSuggestAllListRecyclerViewAdapter);
+        friendsSuggestAllListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        callAllUsersToSuggestionService();
+    }
+
+    private void callAllUsersToSuggestionService(){
         try {
             friendService.allUsersToFriendsSuggestion(new FriendResponseListener() {
                 @Override
                 public void onError(String message) {
-                    //TODO HANDLE ERROR
+                    ComponentUtil.sendToast(FriendsFragment.this.getContext(), message);
+                    Log.e(TAG, message);
                 }
                 @Override
                 public void onResponse(FriendModel friendModelResponse) {
@@ -178,22 +248,32 @@ public class FriendsFragment extends Fragment {
                 }
                 @Override
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
-                    friendsSuggestAllListRecyclerView.setAdapter(new FriendsSuggestRecyclerViewAdapter(v.getContext(), friendModelListResponse));
-                    friendsSuggestAllListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                    allUsersToSuggestList = friendModelListResponse;
+                    friendsSuggestAllListRecyclerViewAdapter.setItems(allUsersToSuggestList);
+                    friendsSuggestAllListRecyclerViewAdapter.notifyDataSetChanged();
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
     }
 
     private void setupCommonUsersSuggestion(View v) {
-        RecyclerView friendsSuggestRecommendedListRecyclerView = v.findViewById(R.id.exploreRecommendedFriendsListRecyclerView);
+        recommendedFriendsRelativeLayout = v.findViewById(R.id.recommendedFriendsRelativeLayout);
+        friendsSuggestRecommendedListRecyclerView = v.findViewById(R.id.exploreRecommendedFriendsListRecyclerView);
+        friendsSuggestRecommendedListRecyclerViewAdapter = new FriendsSuggestRecyclerViewAdapter(v.getContext(), this.friendService, commonUsersToSuggestList);
+        friendsSuggestRecommendedListRecyclerView.setAdapter(friendsSuggestRecommendedListRecyclerViewAdapter);
+        friendsSuggestRecommendedListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        callCommonUsersToSuggestionService();
+    }
+
+    private void callCommonUsersToSuggestionService(){
         try {
             friendService.commonUsersToFriendsSuggestion(new FriendResponseListener() {
                 @Override
                 public void onError(String message) {
-                    //TODO HANDLE ERROR
+                    ComponentUtil.sendToast(FriendsFragment.this.getContext(), message);
+                    Log.e(TAG, message);
                 }
 
                 @Override
@@ -203,12 +283,20 @@ public class FriendsFragment extends Fragment {
 
                 @Override
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
-                    friendsSuggestRecommendedListRecyclerView.setAdapter(new FriendsSuggestRecyclerViewAdapter(v.getContext(), friendModelListResponse));
-                    friendsSuggestRecommendedListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+                    if(friendModelListResponse.size() > 0){
+                        commonUsersToSuggestList = friendModelListResponse;
+                        friendsSuggestRecommendedListRecyclerViewAdapter.setItems(commonUsersToSuggestList);
+                        friendsSuggestRecommendedListRecyclerViewAdapter.notifyDataSetChanged();
+                        recommendedFriendsRelativeLayout.setVisibility(View.VISIBLE);
+                        allUsersToSuggestRelativeLayout.setMinimumHeight(250);
+                    } else {
+                        recommendedFriendsRelativeLayout.setVisibility(View.GONE);
+                        allUsersToSuggestRelativeLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+                    }
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
     }
 }

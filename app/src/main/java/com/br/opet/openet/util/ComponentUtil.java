@@ -3,6 +3,7 @@ package com.br.opet.openet.util;
 import android.content.Context;
 import android.os.Build;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -21,6 +22,10 @@ public class ComponentUtil {
     public static void changeButtonBackgroundEnabled(Context mContext, Button buttonToEnable){
         buttonToEnable.setBackgroundTintList(AppCompatResources.getColorStateList(mContext, R.color.openet_green));
         buttonToEnable.setTextColor(mContext.getResources().getColor(R.color.white));
+    }
+
+    public static void sendToast(Context mContext, String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_LONG).show();
     }
 
 }

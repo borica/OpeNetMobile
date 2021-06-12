@@ -12,12 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.br.opet.openet.R;
-import com.br.opet.openet.listener.FriendRequestListener;
-import com.br.opet.openet.listener.FriendResponseListener;
 import com.br.opet.openet.model.FriendModel;
-import com.br.opet.openet.service.FriendService;
 import com.br.opet.openet.service.impl.FriendServiceImpl;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<FriendRequestRecyclerViewAdapter.MyViewHolder> {
@@ -70,14 +68,25 @@ public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<Frien
             acceptFriendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    friendService.postAcceptFriendRequest(friendId.getText().toString(), new FriendRequestListener() {
-                        @Override
-                        public void onError(String message) {
-                            Log.e("MyViewHolder: ", message);
-                        }
-                    });
+                    friendService.postAcceptFriendRequest(friendId.getText().toString(), message -> Log.e("MyViewHolder: ", message));
+                    removeItemFromDataSet(friendId.getText().toString());
+                    notifyDataSetChanged();
                 }
             });
+        }
+    }
+
+    public void setItems(List<FriendModel> friendList) {
+        this.friendsArrayList = friendList;
+    }
+
+    private void removeItemFromDataSet(String id){
+        Iterator<FriendModel> i = friendsArrayList.iterator();
+        while (i.hasNext()) {
+            FriendModel friend = (FriendModel) i.next();
+            if(friend.getId().equals(id)) {
+                i.remove();
+            }
         }
     }
 

@@ -56,4 +56,8 @@ public class FriendsRecyclerViewAdapter extends RecyclerView.Adapter<FriendsRecy
         }
     }
 
+    public void setItems(List<FriendModel> friendList) {
+        this.friendsArrayList = friendList;
+    }
+
 }

@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.br.opet.openet.R;
 import com.br.opet.openet.adapter.recyclerViewAdapter.FriendRequestRecyclerViewAdapter;
@@ -34,6 +35,15 @@ import java.util.List;
 public class FriendsFragment extends Fragment {
 
     public static final String TAG = FriendsFragment.class.getName();
+
+    SwipeRefreshLayout friendsFragmentSwipeRefreshLayout;
+    RelativeLayout friendsListRelativeLayout;
+    RelativeLayout friendRequestRelativeLayout;
+    RelativeLayout exploreFriendsRelativeLayout;
+
+    Button allFriendsButton;
+    Button friendRequestsButton;
+    Button exploreFriendsButton;
 
     FriendServiceImpl friendService;
 
@@ -63,14 +73,6 @@ public class FriendsFragment extends Fragment {
     RecyclerView friendsSuggestRecommendedListRecyclerView;
     FriendsSuggestRecyclerViewAdapter friendsSuggestRecommendedListRecyclerViewAdapter;
 
-    RelativeLayout friendsListRelativeLayout;
-    RelativeLayout friendRequestRelativeLayout;
-    RelativeLayout exploreFriendsRelativeLayout;
-
-    Button allFriendsButton;
-    Button friendRequestsButton;
-    Button exploreFriendsButton;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_friends, container, false);
@@ -91,6 +93,15 @@ public class FriendsFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void instanciateObjects(View v) {
+        friendsFragmentSwipeRefreshLayout = v.findViewById(R.id.friendsFragmentSwipeRefreshLayout);
+        friendsFragmentSwipeRefreshLayout.setOnRefreshListener(() -> {
+            callAllFriendsService();
+            callAllUsersToSuggestionService();
+            callCommonUsersToSuggestionService();
+            callFriendRequestService();
+            friendsFragmentSwipeRefreshLayout.setRefreshing(false);
+        });
+
         friendService = new FriendServiceImpl(v.getContext());
 
         this.friendsListRelativeLayout = getView().findViewById(R.id.friendsListRelativeLayout);

@@ -1,6 +1,7 @@
 package com.br.opet.openet.adapter.recyclerViewAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,8 @@ public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<Frien
                     friendService.postAcceptFriendRequest(friendId.getText().toString(), message -> Log.e("MyViewHolder: ", message));
                     removeItemFromDataSet(friendId.getText().toString());
                     notifyDataSetChanged();
+                    Intent friendsFragmentReceiverIntent = new Intent("updateFriendsView");
+                    mContext.sendBroadcast(friendsFragmentReceiverIntent);
                 }
             });
         }

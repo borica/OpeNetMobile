@@ -1,5 +1,7 @@
 package com.br.opet.openet.fragment.dashboardFragments;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +27,7 @@ import com.br.opet.openet.adapter.recyclerViewAdapter.FriendsSuggestRecyclerView
 import com.br.opet.openet.listener.FriendResponseListener;
 import com.br.opet.openet.model.CourseModel;
 import com.br.opet.openet.model.FriendModel;
+import com.br.opet.openet.receiver.FriendsFragmentReceiver;
 import com.br.opet.openet.service.FriendService;
 import com.br.opet.openet.service.impl.FriendServiceImpl;
 import com.br.opet.openet.util.ComponentUtil;
@@ -35,6 +38,9 @@ import java.util.List;
 public class FriendsFragment extends Fragment {
 
     public static final String TAG = FriendsFragment.class.getName();
+
+    //Used to handle actions inside adapters without explicitly passing this fragment to the adapter
+    FriendsFragmentReceiver friendsFragmentReceiver;
 
     SwipeRefreshLayout friendsFragmentSwipeRefreshLayout;
     RelativeLayout friendsListRelativeLayout;
@@ -65,13 +71,30 @@ public class FriendsFragment extends Fragment {
 
     //All Friend Suggestion related components
     RelativeLayout allUsersToSuggestRelativeLayout;
-    RecyclerView friendsSuggestAllListRecyclerView;
     FriendsSuggestRecyclerViewAdapter friendsSuggestAllListRecyclerViewAdapter;
+    RecyclerView friendsSuggestAllListRecyclerView;
 
     //Common Friend Suggestion related components
     RelativeLayout recommendedFriendsRelativeLayout;
-    RecyclerView friendsSuggestRecommendedListRecyclerView;
     FriendsSuggestRecyclerViewAdapter friendsSuggestRecommendedListRecyclerViewAdapter;
+    RecyclerView friendsSuggestRecommendedListRecyclerView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        friendsFragmentReceiver = new FriendsFragmentReceiver(this);
+        IntentFilter friendsFragmentIntentFilter = new IntentFilter();
+        friendsFragmentIntentFilter.addAction("updateRequestsView");
+        friendsFragmentIntentFilter.addAction("updateFriendsView");
+        friendsFragmentIntentFilter.addAction("updateExploreView");
+        requireActivity().registerReceiver(friendsFragmentReceiver, friendsFragmentIntentFilter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        requireActivity().unregisterReceiver(friendsFragmentReceiver);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -164,7 +187,7 @@ public class FriendsFragment extends Fragment {
         callAllFriendsService();
     }
 
-    private void callAllFriendsService(){
+    public void callAllFriendsService(){
         try {
             friendService.allFriends(new FriendResponseListener() {
                 @Override
@@ -205,7 +228,7 @@ public class FriendsFragment extends Fragment {
         callFriendRequestService();
     }
 
-    private void callFriendRequestService(){
+    public void callFriendRequestService(){
         try {
             friendService.allFriendsRequests(new FriendResponseListener() {
                 @Override
@@ -245,7 +268,7 @@ public class FriendsFragment extends Fragment {
         callAllUsersToSuggestionService();
     }
 
-    private void callAllUsersToSuggestionService(){
+    public void callAllUsersToSuggestionService(){
         try {
             friendService.allUsersToFriendsSuggestion(new FriendResponseListener() {
                 @Override
@@ -278,7 +301,7 @@ public class FriendsFragment extends Fragment {
         callCommonUsersToSuggestionService();
     }
 
-    private void callCommonUsersToSuggestionService(){
+    public void callCommonUsersToSuggestionService(){
         try {
             friendService.commonUsersToFriendsSuggestion(new FriendResponseListener() {
                 @Override

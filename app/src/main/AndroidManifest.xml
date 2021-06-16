@@ -14,11 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OpeNet"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.DashboardActivity"></activity>
+
+        <receiver
+            android:name=".receiver.FriendsFragmentReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".activity.DashboardActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

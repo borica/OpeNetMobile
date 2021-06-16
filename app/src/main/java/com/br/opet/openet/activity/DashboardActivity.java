@@ -56,8 +56,5 @@ public class DashboardActivity extends NoBarActivity {
                 headerNavigationTabLayout.selectTab(headerNavigationTabLayout.getTabAt(position));
             }
         });
-
-
-
     }
 }

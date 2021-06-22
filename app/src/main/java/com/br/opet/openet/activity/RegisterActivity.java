@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.br.opet.openet.R;
+import com.br.opet.openet.activity.defaultActivity.NoBarActivity;
 import com.br.opet.openet.listener.CourseServiceResponseListener;
 import com.br.opet.openet.listener.UserServiceResponseListener;
 import com.br.opet.openet.model.CourseModel;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class RegisterActivity extends NoBarActivity implements View.OnClickListener {
+
+    private static final String TAG = RegisterActivity.class.getName();
 
     private TextInputEditText name, userName, email, password, confirmPassword, nascimento;
     private Button register;
@@ -183,16 +187,8 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
             service.listCourses(this, new CourseServiceResponseListener() {
                 @Override
                 public void onError(String message) {
-                    cursos = new ArrayList<>();
-                    cursos.add(new CourseModel("1", "Licenciatura"));
-                    cursos.add(new CourseModel("2", "Padaria"));
-                    cursos.add(new CourseModel("3", "Taxista"));
-                    cursos.add(new CourseModel("4", "Marceneiro"));
-
-                    ArrayAdapter<CourseModel> adapter = new ArrayAdapter<>(RegisterActivity.this, R.layout.list_item, cursos);
-                    curso.setAdapter(adapter);
+                    Log.i(TAG, "Erro: " + message);
                 }
-
                 @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onResponse(ArrayList<CourseModel> courses) {

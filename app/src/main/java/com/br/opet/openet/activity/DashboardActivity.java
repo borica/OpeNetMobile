@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.br.opet.openet.R;
+import com.br.opet.openet.activity.defaultActivity.NoBarActivity;
 import com.br.opet.openet.adapter.fragmentAdapter.DashboardFragmentAdapter;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;

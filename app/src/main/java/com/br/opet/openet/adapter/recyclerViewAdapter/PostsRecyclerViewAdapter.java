@@ -1,7 +1,6 @@
 package com.br.opet.openet.adapter.recyclerViewAdapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.br.opet.openet.R;
-import com.br.opet.openet.model.FriendModel;
 import com.br.opet.openet.model.PostModel;
 import com.squareup.picasso.Picasso;
 

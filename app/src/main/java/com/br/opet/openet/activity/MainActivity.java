@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.br.opet.openet.R;
+import com.br.opet.openet.activity.defaultActivity.NoBarActivity;
 
 public class MainActivity extends NoBarActivity {
 

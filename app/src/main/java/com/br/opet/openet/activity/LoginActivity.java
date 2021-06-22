@@ -6,17 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.br.opet.openet.R;
+import com.br.opet.openet.activity.defaultActivity.NoBarActivity;
 import com.br.opet.openet.application.ApplicationContext;
 import com.br.opet.openet.listener.UserServiceResponseListener;
 import com.br.opet.openet.model.UserModel;
 import com.br.opet.openet.model.dto.RequestUserAuthDTO;
 import com.br.opet.openet.service.impl.UserServiceImpl;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends NoBarActivity implements View.OnClickListener {
 

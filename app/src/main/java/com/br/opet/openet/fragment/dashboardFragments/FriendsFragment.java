@@ -42,15 +42,20 @@ public class FriendsFragment extends Fragment {
     //Used to handle actions inside adapters without explicitly passing this fragment to the adapter
     FriendsFragmentReceiver friendsFragmentReceiver;
 
+    //Used to refresh data of friends fragment
     SwipeRefreshLayout friendsFragmentSwipeRefreshLayout;
+
+    //Containers for screens inside friends fragment
     RelativeLayout friendsListRelativeLayout;
     RelativeLayout friendRequestRelativeLayout;
     RelativeLayout exploreFriendsRelativeLayout;
 
+    //Buttons used to navigate beetween screens in friends fragment
     Button allFriendsButton;
     Button friendRequestsButton;
     Button exploreFriendsButton;
 
+    //Service class used to handle requests to friends api endpoint
     FriendServiceImpl friendService;
 
     //Lists displayed in each friends layout
@@ -196,9 +201,7 @@ public class FriendsFragment extends Fragment {
                     Log.e(TAG, message);
                 }
                 @Override
-                public void onResponse(FriendModel friendModelResponse) {
-
-                }
+                public void onResponse(FriendModel friendModelResponse) {}
                 @Override
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
                     if(friendModelListResponse.size() > 0){

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/administrator_light_color"
+    tools:context=".activity.AdminDashboardActivity">
+
+    <LinearLayout
+        android:id="@+id/headerLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="10dp"
+        android:gravity="center_horizontal"
+        android:background="@color/administrator_main_color">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:text="OPENET"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/headerNavigationTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerLinearLayout"
+        app:tabSelectedTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
+        android:background="@color/administrator_main_color"
+        app:tabGravity="center">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/friendsTabItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="Painel do administrador"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <RelativeLayout
+        android:id="@+id/welcomeRelativeLayout"
+        android:layout_below="@id/headerNavigationTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/roundedbackground"
+        android:padding="10dp"
+        android:elevation="5dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/admin"/>
+
+        <TextView
+            android:id="@+id/welcomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"
+            android:text="Bem-vindo administrador"/>
+
+        <TextView
+            android:id="@+id/loginTimeTextView"
+            android:layout_below="@+id/welcomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="login: "/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/nothingToSeeAdministratorRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/nothingToSeeImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/ic_admin_dashboard"/>
+
+        <TextView
+            android:layout_below="@+id/nothingToSeeImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:text="Parabéns!\nTudo limpo e organizado" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

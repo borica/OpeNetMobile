@@ -43,8 +43,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         if(applicationContext.getLoggedUser() != null){
             redirectToDashboardActivity();
         }
-        username.setText("borica");
-        password.setText("borica123");
+        username.setText("admin");
+        password.setText("admin123");
     }
 
     @Override
@@ -132,11 +132,15 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
     private void redirectToSignUpActivity() {
         Intent signUpActivityIntent = new Intent(this, RegisterActivity.class);
         startActivity(signUpActivityIntent);
-//        finish();
     }
 
     private void redirectToDashboardActivity() {
-        Intent dashboardActivityIntent = new Intent(this, DashboardActivity.class);
+        Intent dashboardActivityIntent;
+        if(applicationContext.getLoggedUser().getAdmin()) {
+            dashboardActivityIntent = new Intent(this, AdminDashboardActivity.class);
+        } else {
+            dashboardActivityIntent = new Intent(this, DashboardActivity.class);
+        }
         startActivity(dashboardActivityIntent);
         finish();
     }

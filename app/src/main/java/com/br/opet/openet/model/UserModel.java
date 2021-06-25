@@ -13,6 +13,7 @@ public class UserModel implements Serializable {
     String password;
     String email;
     String avatar;
+    Boolean isAdmin;
     CourseModel couseModel;
     Date birth_date;
     Date created_at;
@@ -40,6 +41,7 @@ public class UserModel implements Serializable {
         this.password = userResponseDTO.getUser().getPassword();
         this.email = userResponseDTO.getUser().getEmail();
         this.avatar = userResponseDTO.getUser().getAvatar();
+        this.isAdmin = userResponseDTO.getUser().isAdmin();
         //TODO Parse CourseId to CourseModel
         //this.couseModel = userResponseDTO.getUser().get ;
         //TODO Parse birth_date to Date
@@ -50,6 +52,14 @@ public class UserModel implements Serializable {
         //this.updated_at;
         this.avatar_url = userResponseDTO.getUser().getAvatar_url();
         this.token = userResponseDTO.getToken();
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 
     public String getPassword() {
@@ -157,6 +167,7 @@ public class UserModel implements Serializable {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", avatar='" + avatar + '\'' +
+                ", isAdmin=" + isAdmin +
                 ", couseModel=" + couseModel +
                 ", birth_date=" + birth_date +
                 ", created_at=" + created_at +

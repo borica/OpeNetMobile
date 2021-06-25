@@ -17,6 +17,15 @@ public class UserDTO implements Serializable {
     String created_at;
     String updated_at;
     String avatar_url;
+    boolean isAdmin;
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     public String getPassword() {
         return password;

@@ -14,7 +14,11 @@
     <color name="openet_green_light">#D5FADD</color>
     <color name="openet_green_dark">#23492B</color>
 
-    <!--    Unselected Button-->
+    <!-- Unselected Button-->
     <color name="unselect_button_text">#808080</color>
+
+    <!-- Administrator screen colors -->
+    <color name="administrator_main_color">#2d3436</color>
+    <color name="administrator_light_color">#FDFDFD</color>
 
 </resources>

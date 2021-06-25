@@ -17,7 +17,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="false"
             android:layout_marginTop="150dp"
-            android:src="@drawable/ic_empty" />
+            android:src="@drawable/ic_under_construction" />
 
         <TextView
             android:id="@+id/noFriendsTextView"
@@ -26,17 +26,9 @@
             android:layout_below="@id/friendsImageView"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
-
-            android:text="Está bem vazio por aqui...\nComece uma nova conversa"
+            android:textSize="16dp"
+            android:text="Recurso em construção!\nchegando em breve !"
             android:textAlignment="center" />
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/noFriendsTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:text="Explorar" />
 
     </RelativeLayout>
 

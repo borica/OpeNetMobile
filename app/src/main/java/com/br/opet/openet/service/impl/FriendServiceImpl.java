@@ -14,6 +14,7 @@ import com.br.opet.openet.model.dto.UserDTO;
 import com.br.opet.openet.service.FriendService;
 import com.br.opet.openet.service.impl.defaultRequest.DefaultRestClient;
 import com.br.opet.openet.service.util.HTTPUtils;
+import com.br.opet.openet.util.ComparatorUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +22,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /*
@@ -92,6 +95,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
                             usersToSuggestList.add(new FriendModel(userDTO.getId(), userDTO.getName(), userDTO.getAvatar(), new CourseModel(userDTO.getCourse_id())));
                     }
+                    Collections.sort(usersToSuggestList, new ComparatorUtil.SortByFriendName());
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -118,6 +122,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
                             usersToSuggestList.add(new FriendModel(userDTO.getId(), userDTO.getName(), userDTO.getAvatar(), new CourseModel(userDTO.getCourse_id())));
                     }
+                    Collections.sort(usersToSuggestList, new ComparatorUtil.SortByFriendName());
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -144,6 +149,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                         if (!appContext.getLoggedUser().getId().equals(friendRequestDTO.getUser().getId()))
                             usersToSuggestList.add(new FriendModel(friendRequestDTO.getId(), friendRequestDTO.getUser().getName(), friendRequestDTO.getUser().getAvatar(), new CourseModel(friendRequestDTO.getUser().getCourse_id())));
                     }
+                    Collections.sort(usersToSuggestList, new ComparatorUtil.SortByFriendName());
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -170,6 +176,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
                             usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar(), new CourseModel(userDTO.getCourse_id())));
                     }
+                    Collections.sort(usersToSuggestList, new ComparatorUtil.SortByFriendName());
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -180,11 +187,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
 
     public void sendFriendRequest(String id, FriendRequestListener responseListener) {
         try {
-            String token = appContext.getLoggedUser().getToken();
-            final JSONObject bodyRequest  = new JSONObject();
-            bodyRequest.put("friend_id", id);
-
-            doPost(mContext, HTTPUtils.HOST + FriendRoutesEnum.INVITE_USER_AS_FRIEND.getRoute(), token, bodyRequest, new RestResponseListener() {
+            doPost(mContext, HTTPUtils.HOST + FriendRoutesEnum.INVITE_USER_AS_FRIEND.getRoute(), appContext.getLoggedUser().getToken(), new JSONObject().put("friend_id", id), new RestResponseListener() {
                 @Override
                 public void onError(String message) {
                     responseListener.onError(message);
@@ -199,11 +202,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
 
     public void postAcceptFriendRequest(String id, FriendRequestListener responseListener) {
         try {
-            String token = appContext.getLoggedUser().getToken();
-            final JSONObject bodyRequest  = new JSONObject();
-            bodyRequest.put("id", id);
-
-            doPost(mContext, HTTPUtils.HOST + FriendRoutesEnum.ACCEPT_USER_AS_FRIEND.getRoute(), token, bodyRequest, new RestResponseListener() {
+            doPost(mContext, HTTPUtils.HOST + FriendRoutesEnum.ACCEPT_USER_AS_FRIEND.getRoute(), appContext.getLoggedUser().getToken(), new JSONObject().put("id", id), new RestResponseListener() {
                 @Override
                 public void onError(String message) {
                     responseListener.onError(message);

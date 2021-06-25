@@ -1,5 +1,6 @@
 package com.br.opet.openet.fragment.dashboardFragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
@@ -33,6 +34,7 @@ import com.br.opet.openet.service.impl.FriendServiceImpl;
 import com.br.opet.openet.util.ComponentUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FriendsFragment extends Fragment {
@@ -123,10 +125,10 @@ public class FriendsFragment extends Fragment {
     private void instanciateObjects(View v) {
         friendsFragmentSwipeRefreshLayout = v.findViewById(R.id.friendsFragmentSwipeRefreshLayout);
         friendsFragmentSwipeRefreshLayout.setOnRefreshListener(() -> {
-            callAllFriendsService();
-            callAllUsersToSuggestionService();
-            callCommonUsersToSuggestionService();
-            callFriendRequestService();
+            callAllFriendsService(v.getContext());
+            callAllUsersToSuggestionService(v.getContext());
+            callCommonUsersToSuggestionService(v.getContext());
+            callFriendRequestService(v.getContext());
             friendsFragmentSwipeRefreshLayout.setRefreshing(false);
         });
 
@@ -185,14 +187,12 @@ public class FriendsFragment extends Fragment {
 
     private void setupAllFriends(View v) {
         friendsListRecyclerView = v.findViewById(R.id.friendsListRecyclerView);
-        friendsListRecyclerViewAdapter = new FriendsRecyclerViewAdapter(v.getContext(), allFriendsList);
-        friendsListRecyclerView.setAdapter(friendsListRecyclerViewAdapter);
         friendsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
         nothingToSeeAllFriends = v.findViewById(R.id.nothingToSeeAllFriends);
-        callAllFriendsService();
+        callAllFriendsService(v.getContext());
     }
 
-    public void callAllFriendsService(){
+    public void callAllFriendsService(Context mContext){
         try {
             friendService.allFriends(new FriendResponseListener() {
                 @Override
@@ -206,8 +206,8 @@ public class FriendsFragment extends Fragment {
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
                     if(friendModelListResponse.size() > 0){
                         allFriendsList = friendModelListResponse;
-                        friendsListRecyclerViewAdapter.setItems(allFriendsList);
-                        friendsListRecyclerViewAdapter.notifyDataSetChanged();
+                        friendsListRecyclerViewAdapter = new FriendsRecyclerViewAdapter(mContext, allFriendsList);
+                        friendsListRecyclerView.setAdapter(friendsListRecyclerViewAdapter);
                         friendsListRecyclerView.setVisibility(View.VISIBLE);
                         nothingToSeeAllFriends.setVisibility(View.GONE);
                     } else {
@@ -225,13 +225,11 @@ public class FriendsFragment extends Fragment {
         //FriendsFragment
         friendRequestsListRecyclerView = v.findViewById(R.id.friendRequestListRecyclerView);
         nothingToSeeFriendRequest = v.findViewById(R.id.nothingToSeeFriendRequest);
-        friendRequestsListRecyclerViewAdapter = new FriendRequestRecyclerViewAdapter(v.getContext(), friendRequestsList);
-        friendRequestsListRecyclerView.setAdapter(friendRequestsListRecyclerViewAdapter);
         friendRequestsListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        callFriendRequestService();
+        callFriendRequestService(v.getContext());
     }
 
-    public void callFriendRequestService(){
+    public void callFriendRequestService(Context mContext){
         try {
             friendService.allFriendsRequests(new FriendResponseListener() {
                 @Override
@@ -247,8 +245,8 @@ public class FriendsFragment extends Fragment {
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
                     if(friendModelListResponse.size() > 0){
                         friendRequestsList = friendModelListResponse;
-                        friendRequestsListRecyclerViewAdapter.setItems(friendRequestsList);
-                        friendRequestsListRecyclerViewAdapter.notifyDataSetChanged();
+                        friendRequestsListRecyclerViewAdapter = new FriendRequestRecyclerViewAdapter(mContext, friendRequestsList);
+                        friendRequestsListRecyclerView.setAdapter(friendRequestsListRecyclerViewAdapter);
                         friendRequestsListRecyclerView.setVisibility(View.VISIBLE);
                         nothingToSeeFriendRequest.setVisibility(View.GONE);
                     } else {
@@ -265,13 +263,11 @@ public class FriendsFragment extends Fragment {
     private void setupAllUsersSuggestion(View v) {
         allUsersToSuggestRelativeLayout = v.findViewById(R.id.allUsersToSuggestRelativeLayout);
         friendsSuggestAllListRecyclerView = v.findViewById(R.id.exploreFriendsListRecyclerView);
-        friendsSuggestAllListRecyclerViewAdapter = new FriendsSuggestRecyclerViewAdapter(v.getContext(), this.friendService, allUsersToSuggestList);
-        friendsSuggestAllListRecyclerView.setAdapter(friendsSuggestAllListRecyclerViewAdapter);
         friendsSuggestAllListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        callAllUsersToSuggestionService();
+        callAllUsersToSuggestionService(v.getContext());
     }
 
-    public void callAllUsersToSuggestionService(){
+    public void callAllUsersToSuggestionService(Context mContext){
         try {
             friendService.allUsersToFriendsSuggestion(new FriendResponseListener() {
                 @Override
@@ -286,8 +282,8 @@ public class FriendsFragment extends Fragment {
                 @Override
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
                     allUsersToSuggestList = friendModelListResponse;
-                    friendsSuggestAllListRecyclerViewAdapter.setItems(allUsersToSuggestList);
-                    friendsSuggestAllListRecyclerViewAdapter.notifyDataSetChanged();
+                    friendsSuggestAllListRecyclerViewAdapter = new FriendsSuggestRecyclerViewAdapter(mContext, friendService, allUsersToSuggestList);
+                    friendsSuggestAllListRecyclerView.setAdapter(friendsSuggestAllListRecyclerViewAdapter);
                 }
             });
         } catch (Exception e) {
@@ -298,13 +294,11 @@ public class FriendsFragment extends Fragment {
     private void setupCommonUsersSuggestion(View v) {
         recommendedFriendsRelativeLayout = v.findViewById(R.id.recommendedFriendsRelativeLayout);
         friendsSuggestRecommendedListRecyclerView = v.findViewById(R.id.exploreRecommendedFriendsListRecyclerView);
-        friendsSuggestRecommendedListRecyclerViewAdapter = new FriendsSuggestRecyclerViewAdapter(v.getContext(), this.friendService, commonUsersToSuggestList);
-        friendsSuggestRecommendedListRecyclerView.setAdapter(friendsSuggestRecommendedListRecyclerViewAdapter);
         friendsSuggestRecommendedListRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        callCommonUsersToSuggestionService();
+        callCommonUsersToSuggestionService(v.getContext());
     }
 
-    public void callCommonUsersToSuggestionService(){
+    public void callCommonUsersToSuggestionService(Context mContext){
         try {
             friendService.commonUsersToFriendsSuggestion(new FriendResponseListener() {
                 @Override
@@ -322,8 +316,8 @@ public class FriendsFragment extends Fragment {
                 public void onResponseList(List<FriendModel> friendModelListResponse) {
                     if(friendModelListResponse.size() > 0){
                         commonUsersToSuggestList = friendModelListResponse;
-                        friendsSuggestRecommendedListRecyclerViewAdapter.setItems(commonUsersToSuggestList);
-                        friendsSuggestRecommendedListRecyclerViewAdapter.notifyDataSetChanged();
+                        friendsSuggestRecommendedListRecyclerViewAdapter = new FriendsSuggestRecyclerViewAdapter(mContext, friendService, commonUsersToSuggestList);
+                        friendsSuggestRecommendedListRecyclerView.setAdapter(friendsSuggestRecommendedListRecyclerViewAdapter);
                         recommendedFriendsRelativeLayout.setVisibility(View.VISIBLE);
                         allUsersToSuggestRelativeLayout.setMinimumHeight(250);
                     } else {

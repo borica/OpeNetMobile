@@ -1,10 +1,16 @@
 package com.br.opet.openet.adapter.recyclerViewAdapter;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +22,8 @@ import com.br.opet.openet.listener.FriendRequestListener;
 import com.br.opet.openet.model.FriendModel;
 import com.br.opet.openet.service.impl.FriendServiceImpl;
 import com.br.opet.openet.util.ComponentUtil;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
 import java.util.List;
@@ -46,6 +54,19 @@ public class FriendsSuggestRecyclerViewAdapter extends RecyclerView.Adapter<Frie
         holder.friendNameTextView.setText(friendsArrayList.get(position).getName());
         holder.courseNameTextView.setText(friendsArrayList.get(position).getCourse().getCourse());
         holder.friendId.setText(friendsArrayList.get(position).getId());
+
+        if(friendsArrayList.get(position).getImage() != null)
+            Picasso.get().load(friendsArrayList.get(position).getImage()).into(holder.friendSuggestAvatarImageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    holder.friendSuggestAvatarImageView.setImageBitmap(
+                            ComponentUtil.getRoundedCroppedBitmap(
+                                    ComponentUtil.cropToSquare(
+                                            ComponentUtil.drawableToBitmap(holder.friendSuggestAvatarImageView.getDrawable()))));
+                }
+                @Override
+                public void onError(Exception e) {e.printStackTrace();}
+            });
     }
 
     @Override
@@ -58,14 +79,16 @@ public class FriendsSuggestRecyclerViewAdapter extends RecyclerView.Adapter<Frie
         TextView friendNameTextView;
         TextView courseNameTextView;
         TextView friendId;
+        ImageView friendSuggestAvatarImageView;
         Button sendNewRequestButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            friendNameTextView   = itemView.findViewById(R.id.friendNameTextView);
-            courseNameTextView   = itemView.findViewById(R.id.friendCourseTextView);
-            friendId             = itemView.findViewById(R.id.friendId);
-            sendNewRequestButton = itemView.findViewById(R.id.sendNewRequestButton);
+            friendNameTextView           = itemView.findViewById(R.id.friendNameTextView);
+            courseNameTextView           = itemView.findViewById(R.id.friendCourseTextView);
+            friendId                     = itemView.findViewById(R.id.friendId);
+            sendNewRequestButton         = itemView.findViewById(R.id.sendNewRequestButton);
+            friendSuggestAvatarImageView = itemView.findViewById(R.id.friendSuggestAvatarImageView);
 
             sendNewRequestButton.setOnClickListener(v -> {
                 friendService.sendFriendRequest(friendId.getText().toString(), message -> {

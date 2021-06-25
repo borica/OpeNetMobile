@@ -90,7 +90,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
                         UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getId(), userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
+                            usersToSuggestList.add(new FriendModel(userDTO.getId(), userDTO.getName(), userDTO.getAvatar(), new CourseModel(userDTO.getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
@@ -116,7 +116,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
                         UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
                         if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
-                            usersToSuggestList.add(new FriendModel(userDTO.getId(), userDTO.getName(), userDTO.getAvatar_url(), new CourseModel(userDTO.getCourse_id())));
+                            usersToSuggestList.add(new FriendModel(userDTO.getId(), userDTO.getName(), userDTO.getAvatar(), new CourseModel(userDTO.getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
@@ -142,7 +142,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
                         FriendRequestDTO friendRequestDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), FriendRequestDTO.class);
                         if (!appContext.getLoggedUser().getId().equals(friendRequestDTO.getUser().getId()))
-                            usersToSuggestList.add(new FriendModel(friendRequestDTO.getId(), friendRequestDTO.getUser().getName(), friendRequestDTO.getUser().getAvatar_url(), new CourseModel(friendRequestDTO.getUser().getCourse_id())));
+                            usersToSuggestList.add(new FriendModel(friendRequestDTO.getId(), friendRequestDTO.getUser().getName(), friendRequestDTO.getUser().getAvatar(), new CourseModel(friendRequestDTO.getUser().getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
@@ -164,11 +164,11 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
             public void onResponse(JSONObject jsonResponse) {
                 try {
                     List<FriendModel> usersToSuggestList = new ArrayList<>();
-                    JSONArray usersToSuggestJsonArray = jsonResponse.getJSONArray("friends");
+                    JSONArray usersToSuggestJsonArray = jsonResponse.getJSONArray("users");
                     for (int i = 0; i < usersToSuggestJsonArray.length(); i++) {
-                        FriendRequestDTO friendRequestDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), FriendRequestDTO.class);
-                        if (!appContext.getLoggedUser().getId().equals(friendRequestDTO.getUser().getId()))
-                            usersToSuggestList.add(new FriendModel(friendRequestDTO.getUser().getName(), friendRequestDTO.getUser().getAvatar_url(), new CourseModel(friendRequestDTO.getUser().getCourse_id())));
+                        UserDTO userDTO = gson.fromJson(usersToSuggestJsonArray.get(i).toString(), UserDTO.class);
+                        if (!appContext.getLoggedUser().getId().equals(userDTO.getId()))
+                            usersToSuggestList.add(new FriendModel(userDTO.getName(), userDTO.getAvatar(), new CourseModel(userDTO.getCourse_id())));
                     }
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {

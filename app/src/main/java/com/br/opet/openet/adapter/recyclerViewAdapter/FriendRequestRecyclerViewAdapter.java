@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.br.opet.openet.R;
 import com.br.opet.openet.model.FriendModel;
 import com.br.opet.openet.service.impl.FriendServiceImpl;
+import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +47,9 @@ public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<Frien
         holder.friendNameTextView.setText(friendsArrayList.get(position).getName());
         holder.courseNameTextView.setText(friendsArrayList.get(position).getCourse().getCourse());
         holder.friendId.setText(friendsArrayList.get(position).getId());
+
+        if(friendsArrayList.get(position).getImage() != null)
+            Picasso.get().load(friendsArrayList.get(position).getImage()).into(holder.friendAvatarImageview);
     }
 
     @Override
@@ -57,14 +62,16 @@ public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<Frien
         TextView friendNameTextView;
         TextView courseNameTextView;
         TextView friendId;
+        ImageView friendAvatarImageview;
         Button acceptFriendButton;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            friendNameTextView = itemView.findViewById(R.id.friendNameTextView);
-            courseNameTextView = itemView.findViewById(R.id.friendCourseTextView);
-            acceptFriendButton = itemView.findViewById(R.id.acceptFriendButton);
-            friendId           = itemView.findViewById(R.id.friendId);
+            friendNameTextView      = itemView.findViewById(R.id.friendNameTextView);
+            courseNameTextView      = itemView.findViewById(R.id.friendCourseTextView);
+            acceptFriendButton      = itemView.findViewById(R.id.acceptFriendButton);
+            friendId                = itemView.findViewById(R.id.friendId);
+            friendAvatarImageview   = itemView.findViewById(R.id.friendRequestAvatar);
 
             acceptFriendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,8 +79,10 @@ public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<Frien
                     friendService.postAcceptFriendRequest(friendId.getText().toString(), message -> Log.e("MyViewHolder: ", message));
                     removeItemFromDataSet(friendId.getText().toString());
                     notifyDataSetChanged();
-                    Intent friendsFragmentReceiverIntent = new Intent("updateFriendsView");
-                    mContext.sendBroadcast(friendsFragmentReceiverIntent);
+                    Intent friendsFragmentReceiverIntentAction1 = new Intent("updateFriendsView");
+                    Intent friendsFragmentReceiverIntentAction2 = new Intent("updateRequestsView");
+                    mContext.sendBroadcast(friendsFragmentReceiverIntentAction1);
+                    mContext.sendBroadcast(friendsFragmentReceiverIntentAction2);
                 }
             });
         }

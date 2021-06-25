@@ -21,14 +21,14 @@ public class FriendsFragmentReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         switch(intent.getAction()){
             case "updateRequestsView":
-                friendsFragment.callFriendRequestService();
+                friendsFragment.callFriendRequestService(context);
                 break;
             case "updateFriendsView":
-                friendsFragment.callAllFriendsService();
+                friendsFragment.callAllFriendsService(context);
                 break;
             case "updateExploreView":
-                friendsFragment.callAllUsersToSuggestionService();
-                friendsFragment.callCommonUsersToSuggestionService();
+                friendsFragment.callAllUsersToSuggestionService(context);
+                friendsFragment.callCommonUsersToSuggestionService(context);
                 break;
             default:
                 throw new UnsupportedOperationException("Must specify action");

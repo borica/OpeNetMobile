@@ -68,7 +68,6 @@
 
             </RelativeLayout>
 
-            <!--        TODO ADD PULL TO REFRESH VIEW -->
             <RelativeLayout
                 android:id="@+id/friendRequestRelativeLayout"
                 android:layout_width="match_parent"

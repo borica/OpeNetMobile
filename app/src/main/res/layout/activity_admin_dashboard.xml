@@ -48,66 +48,103 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-    <RelativeLayout
-        android:id="@+id/welcomeRelativeLayout"
-        android:layout_below="@id/headerNavigationTabLayout"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshUsersSwypeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="20dp"
-        android:background="@drawable/roundedbackground"
-        android:padding="10dp"
-        android:elevation="5dp">
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerNavigationTabLayout">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/admin"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/welcomeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:textStyle="bold"
-            android:textSize="16dp"
-            android:layout_marginTop="5dp"
-            android:text="Bem-vindo administrador"/>
+            <RelativeLayout
+                android:id="@+id/welcomeRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/roundedbackground"
+                android:padding="10dp"
+                android:elevation="5dp">
 
-        <TextView
-            android:id="@+id/loginTimeTextView"
-            android:layout_below="@+id/welcomeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="login: "/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/admin"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/welcomeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Bem-vindo administrador"/>
 
-    <RelativeLayout
-        android:id="@+id/nothingToSeeAdministratorRelativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+                <TextView
+                    android:id="@+id/loginTimeTextView"
+                    android:layout_below="@+id/welcomeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="login: "/>
 
-        <ImageView
-            android:id="@+id/nothingToSeeImageView"
-            android:layout_centerHorizontal="true"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_admin_dashboard"/>
+            </RelativeLayout>
 
-        <TextView
-            android:layout_below="@+id/nothingToSeeImageView"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            android:text="Parabéns!\nTudo limpo e organizado" />
+            <RelativeLayout
+                android:id="@+id/nothingToSeeAdministratorRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="gone">
 
+                <ImageView
+                    android:id="@+id/nothingToSeeImageView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:src="@drawable/ic_admin_dashboard"/>
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_below="@+id/nothingToSeeImageView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:text="Parabéns!\nTudo limpo e organizado" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/usersToApproveRelativeLayout"
+                android:layout_below="@+id/welcomeRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/usersCountTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Usuários para aprovar"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_below="@+id/usersCountTextView"
+                    android:id="@+id/usersToApproveRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="20dp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

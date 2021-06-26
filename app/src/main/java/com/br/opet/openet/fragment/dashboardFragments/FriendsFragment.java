@@ -1,7 +1,6 @@
 package com.br.opet.openet.fragment.dashboardFragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,15 +24,12 @@ import com.br.opet.openet.adapter.recyclerViewAdapter.FriendRequestRecyclerViewA
 import com.br.opet.openet.adapter.recyclerViewAdapter.FriendsRecyclerViewAdapter;
 import com.br.opet.openet.adapter.recyclerViewAdapter.FriendsSuggestRecyclerViewAdapter;
 import com.br.opet.openet.listener.FriendResponseListener;
-import com.br.opet.openet.model.CourseModel;
 import com.br.opet.openet.model.FriendModel;
 import com.br.opet.openet.receiver.FriendsFragmentReceiver;
-import com.br.opet.openet.service.FriendService;
 import com.br.opet.openet.service.impl.FriendServiceImpl;
 import com.br.opet.openet.util.ComponentUtil;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class FriendsFragment extends Fragment {

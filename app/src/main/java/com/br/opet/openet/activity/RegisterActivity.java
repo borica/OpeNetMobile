@@ -68,7 +68,7 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
                     );
                     
                     try {
-                        userService.createUser(this, requestUserAuth, new UserServiceResponseListener() {
+                        userService.createUser(requestUserAuth, new UserServiceResponseListener() {
                             @Override
                             public void onError(String message) {
                                 Toast.makeText(RegisterActivity.this, "Não foi possível realizar o cadastro.", Toast.LENGTH_LONG).show();
@@ -177,7 +177,7 @@ public class RegisterActivity extends NoBarActivity implements View.OnClickListe
         nascimento.setOnClickListener(this);
 
         curso = findViewById(R.id.cursoAutoCompleteTextView);
-        userService = new UserServiceImpl();
+        userService = new UserServiceImpl(this);
         loadCourses();
     }
 

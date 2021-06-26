@@ -29,12 +29,19 @@ public class UserModel implements Serializable {
         this.avatar_url = avatarUrl;
     }
 
+    public UserModel(String id, String name, CourseModel couseModel, String avatarUrl ){
+        this.id = id;
+        this.name = name;
+        this.couseModel = couseModel;
+        this.avatar_url = avatarUrl;
+    }
+
     public UserModel(String username, String password){
         this.username = username;
         this.password = password;
     }
 
-    public UserModel(UserResponseDTO userResponseDTO) {
+    public  UserModel(UserResponseDTO userResponseDTO) {
         this.id = userResponseDTO.getUser().getId();
         this.name = userResponseDTO.getUser().getName();
         this.username = userResponseDTO.getUser().getUsername();

@@ -65,7 +65,7 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
             //New request DTO
             RequestUserAuthDTO requestUserAuth = new RequestUserAuthDTO(username.getText().toString(), password.getText().toString());
             try {
-                userService.authenticate(this, requestUserAuth, new UserServiceResponseListener() {
+                userService.authenticate(requestUserAuth, new UserServiceResponseListener() {
                     @Override
                     public void onError(String message) {
                         loginErrorEvent();
@@ -99,7 +99,7 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         loginBtn.setOnClickListener(this);
         signUpTextView.setOnClickListener(this);
 
-        userService = new UserServiceImpl();
+        userService = new UserServiceImpl(this);
     }
 
     private Boolean validateFields() {

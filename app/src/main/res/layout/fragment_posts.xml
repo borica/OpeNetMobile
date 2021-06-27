@@ -38,8 +38,7 @@
                 android:layout_height="25dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/ic_close"
-                />
+                android:src="@drawable/ic_close" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/postTextTextInputLayout"
@@ -65,17 +64,37 @@
             <RelativeLayout
                 android:id="@+id/addNewPicRelativeLayout"
                 android:layout_below="@+id/postTextTextInputLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:background="@drawable/roundedbackground"
                 android:backgroundTint="@color/light_gray"
                 android:padding="20dp"
                 android:layout_marginLeft="25dp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:src="@drawable/ic_camera"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/addedPictureRelativeLayout"
+                android:layout_below="@+id/postTextTextInputLayout"
+                android:layout_toRightOf="@+id/addNewPicRelativeLayout"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/roundedbackground"
+                android:backgroundTint="@color/light_gray"
+                android:layout_marginLeft="15dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/addedPictureImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"/>
 
             </RelativeLayout>
 

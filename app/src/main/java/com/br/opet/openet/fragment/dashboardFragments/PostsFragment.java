@@ -1,7 +1,9 @@
 package com.br.opet.openet.fragment.dashboardFragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -88,15 +90,22 @@ public class PostsFragment extends Fragment {
         addedPictureRelativeLayout = view.findViewById(R.id.addedPictureRelativeLayout);
         finishPostButton = view.findViewById(R.id.finishPostButton);
         finishPostButton.setOnClickListener(v -> {
-            try {
-                if(this.postService.createPostWithImage(requireActivity().getContentResolver(), filePath, postTextTextInputEditText.getText().toString())){
-                    ComponentUtil.sendToast(this.getContext(), "Realizando upload do seu post :)");
-                } else {
+            if(postTextTextInputEditText.getText() == null || postTextTextInputEditText.getText().toString().equals("")){
+                postTextTextInputEditText.setError("Favor preencher!");
+            } else {
+                try {
+                    if(this.postService.createPostWithImage(requireActivity().getContentResolver(), filePath, postTextTextInputEditText.getText().toString())){
+                        ComponentUtil.sendToast(this.getContext(), "Realizando upload do seu post :)");
+                    } else {
+                        ComponentUtil.sendToast(this.getContext(), "Erro ao criar seu post :(");
+                    }
+                    newPostRelativeLayout.setVisibility(View.GONE);
+                    clearNewPostItems();
+                } catch (Exception e) {
+                    Log.e(TAG, "Erro:\n" + e.getMessage());
                     ComponentUtil.sendToast(this.getContext(), "Erro ao criar seu post :(");
+                    clearNewPostItems();
                 }
-            } catch (Exception e) {
-                Log.e(TAG, "Erro:\n" + e.getMessage());
-                ComponentUtil.sendToast(this.getContext(), "Erro ao criar seu post :(");
             }
         });
         postTextTextInputEditText = view.findViewById(R.id.postTextTextInputEditText);
@@ -112,7 +121,18 @@ public class PostsFragment extends Fragment {
         addedPictureImageView = view.findViewById(R.id.addedPictureImageView);
         closeNewPostImageView = view.findViewById(R.id.closeNewPostImageView);
         closeNewPostImageView.setOnClickListener(v -> {
-            newPostRelativeLayout.setVisibility(View.GONE);
+            AlertDialog confirmCloseDialog;
+            AlertDialog.Builder builder;
+
+            builder = new AlertDialog.Builder(this.getContext());
+            builder.setTitle("Deseja realmente descartar seu novo post ?");
+            builder.setPositiveButton("Sim", (dialog, which) -> {
+                newPostRelativeLayout.setVisibility(View.GONE);
+                clearNewPostItems();
+            });
+            builder.setNegativeButton("Não", (dialog, which) -> {});
+            confirmCloseDialog = builder.create();
+            confirmCloseDialog.show();
         });
         postSwipeRefreshLayout = view.findViewById(R.id.postSwipeRefreshLayout);
         postSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -122,6 +142,12 @@ public class PostsFragment extends Fragment {
             }
         });
         callGetPostsRequest();
+    }
+
+    private void clearNewPostItems() {
+        this.postTextTextInputEditText.setText("");
+        this.bitmapImageFromUserGallery = null;
+        addedPictureRelativeLayout.setVisibility(View.GONE);
     }
 
     private void showFileChooser() {

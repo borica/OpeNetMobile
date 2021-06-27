@@ -84,13 +84,49 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/postLikeButton"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:backgroundTint="@color/light_gray"
-            android:textColor="@android:color/tertiary_text_dark"
-            android:text="curtir" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/postLikeButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                android:textColor="@android:color/tertiary_text_dark"
+                android:text="curtir"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:stateListAnimator="@null"
+                android:textSize="9sp"/>
+
+            <Button
+                android:id="@+id/postCommentButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                android:textColor="@android:color/tertiary_text_dark"
+                android:text="comentar"
+                android:layout_weight="1"
+                android:textSize="9sp"
+                android:stateListAnimator="@null"
+                android:layout_marginRight="5dp"/>
+
+            <Button
+                android:id="@+id/postShareButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                android:textColor="@android:color/tertiary_text_dark"
+                android:text="compartilhar"
+                android:textSize="9sp"
+                android:stateListAnimator="@null"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

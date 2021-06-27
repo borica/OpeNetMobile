@@ -84,7 +84,7 @@
                 android:layout_below="@+id/addNewPicRelativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_baseline_create_24"
+                android:drawableLeft="@drawable/ic_baseline"
                 android:drawableTint="@color/white"
                 android:layout_marginTop="20dp"
                 android:layout_marginHorizontal="25dp"
@@ -108,7 +108,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_create_24"
+            android:src="@drawable/ic_baseline"
             android:layout_toLeftOf="@+id/createNewPostTextView"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"

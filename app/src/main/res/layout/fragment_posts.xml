@@ -1,12 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.dashboardFragments.PostsFragment">
+    
+    <RelativeLayout
+        android:id="@+id/newPostRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:translationZ="90dp"
+        android:clickable="true"
+        android:background="#80000000"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:background="@color/white"
+            android:translationZ="91dp">
+
+            <TextView
+                android:id="@+id/newPostTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nova Postagem"
+                android:textSize="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="25dp" />
+
+            <ImageView
+                android:id="@+id/closeNewPostImageView"
+                android:layout_alignParentRight="true"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_close"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/postTextTextInputLayout"
+                android:layout_below="@+id/newPostTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:layout_marginTop="20dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="500"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="O que está acontecendo ?">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/postTextTextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:textAlignment="viewStart"
+                    android:gravity="start" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/addNewPicRelativeLayout"
+                android:layout_below="@+id/postTextTextInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/roundedbackground"
+                android:backgroundTint="@color/light_gray"
+                android:padding="20dp"
+                android:layout_marginLeft="25dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_camera"/>
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/finishPostButton"
+                android:layout_below="@+id/addNewPicRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_create_24"
+                android:drawableTint="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="25dp"
+                android:text="enviar postagem"
+                >
+
+            </Button>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/createNewPostRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/openet_green"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_create_24"
+            android:layout_toLeftOf="@+id/createNewPostTextView"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/createNewPostTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toque para uma criar nova postagem"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/nothingToSeeRelativeLayout"
+        android:layout_below="@+id/createNewPostRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
@@ -41,17 +162,25 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/postsRelativeLayout"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/postSwipeRefreshLayout"
+        android:layout_below="@+id/createNewPostRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp">
+        android:layout_marginTop="20dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/postsRecyclerView"
+        <RelativeLayout
+            android:id="@+id/postsRelativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-    </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/postsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-</FrameLayout>
+        </RelativeLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

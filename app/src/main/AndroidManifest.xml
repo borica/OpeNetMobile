@@ -13,7 +13,8 @@
         android:roundIcon="@drawable/logo_bg_green_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OpeNet"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config">
         <activity android:name=".activity.AdminDashboardActivity"></activity>
 
         <receiver
@@ -34,5 +35,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

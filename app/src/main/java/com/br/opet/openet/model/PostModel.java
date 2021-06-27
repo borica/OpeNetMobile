@@ -1,5 +1,7 @@
 package com.br.opet.openet.model;
 
+import com.br.opet.openet.model.dto.PostDTO;
+
 public class PostModel {
 
     String id;
@@ -9,6 +11,14 @@ public class PostModel {
     int likes;
 
     public PostModel() {}
+
+    public PostModel(PostDTO postDTO){
+        this.id = postDTO.getId();
+        this.userOwner = new UserModel(postDTO.getUser());
+        this.text = postDTO.getTitle();
+        this.postImageURL = postDTO.getPost_url();
+        this.likes = postDTO.getLike();
+    }
 
     public PostModel(String id, UserModel user, String postText, String postImageURL, int likes) {
 

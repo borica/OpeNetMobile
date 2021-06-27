@@ -43,8 +43,8 @@ public class LoginActivity extends NoBarActivity implements View.OnClickListener
         if(applicationContext.getLoggedUser() != null){
             redirectToDashboardActivity();
         }
-        username.setText("admin");
-        password.setText("admin123");
+        username.setText("borica"); // admin
+        password.setText("borica123"); // admin123
     }
 
     @Override

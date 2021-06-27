@@ -1,5 +1,6 @@
 package com.br.opet.openet.model;
 
+import com.br.opet.openet.model.dto.UserDTO;
 import com.br.opet.openet.model.dto.UserResponseDTO;
 
 import java.io.Serializable;
@@ -49,16 +50,22 @@ public class UserModel implements Serializable {
         this.email = userResponseDTO.getUser().getEmail();
         this.avatar = userResponseDTO.getUser().getAvatar();
         this.isAdmin = userResponseDTO.getUser().isAdmin();
-        //TODO Parse CourseId to CourseModel
-        //this.couseModel = userResponseDTO.getUser().get ;
-        //TODO Parse birth_date to Date
-        //this.birth_date;
-        //TODO Parse created_at to Date
-        //this.created_at;
-        //TODO Parse updated_at to Date
-        //this.updated_at;
         this.avatar_url = userResponseDTO.getUser().getAvatar_url();
         this.token = userResponseDTO.getToken();
+    }
+
+    public  UserModel(UserDTO userDTO) {
+        this.id = userDTO.getId();
+        this.name = userDTO.getName();
+        this.username = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.email = userDTO.getEmail();
+        this.avatar = userDTO.getAvatar();
+        this.isAdmin = userDTO.isAdmin();
+        this.avatar_url = userDTO.getAvatar_url();
+        if(userDTO.getCourse_id() != null){
+            this.couseModel = new CourseModel(userDTO.getCourse_id());
+        }
     }
 
     public Boolean getAdmin() {

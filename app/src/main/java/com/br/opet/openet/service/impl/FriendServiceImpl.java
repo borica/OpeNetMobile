@@ -1,6 +1,7 @@
 package com.br.opet.openet.service.impl;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.br.opet.openet.application.ApplicationContext;
 import com.br.opet.openet.enumerator.FriendRoutesEnum;
@@ -20,53 +21,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-/*
-Cinco rotas foram criadas
-
-        GET - /friends/pending
-
-        Vai listar todos os pedidos de amizade pendendte
-        -----------------------------------------------------------
-        GET - /friends
-
-        Vai listar todos os pedidos de amizades que foram aceitos
-        -----------------------------------------------------------
-        POST - /friends/accept
-
-        body precisa passar o id do pedido de amizade
-        {
-        id: "uuid"
-        }
-
-        Isso vai aceitar o pedido de amizade
-        -----------------------------------------------------------
-        POST - /friends/invite
-
-        body precisa passar o id do amiguinho
-        {
-        friend_id: "uuid"
-        }
-
-        Vai enviar um pedido de amizade;
-        -----------------------------------------------------------
-        DELETE - /friends/reject
-
-        body precisa passar o id do pedido de amizade
-        {
-        "id": "d9d0bfa3-c142-48ce-8bd9-3407274a4188"
-        }
-
-        Vai rejeitar o pedido de amizade
-
- */
-
 public class FriendServiceImpl extends DefaultRestClient implements FriendService {
+
+    private static final String TAG = FriendServiceImpl.class.getName();
 
     private ApplicationContext appContext;
     private Context mContext;
@@ -98,7 +59,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     Collections.sort(usersToSuggestList, new ComparatorUtil.SortByFriendName());
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "Erro:\n" + e.getMessage());
                 }
             }
         });
@@ -125,7 +86,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     Collections.sort(usersToSuggestList, new ComparatorUtil.SortByFriendName());
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "Erro:\n" + e.getMessage());
                 }
             }
         });
@@ -152,7 +113,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     Collections.sort(usersToSuggestList, new ComparatorUtil.SortByFriendName());
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "Erro:\n" + e.getMessage());
                 }
             }
         });
@@ -179,7 +140,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                     Collections.sort(usersToSuggestList, new ComparatorUtil.SortByFriendName());
                     responseListener.onResponseList(usersToSuggestList);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "Erro:\n" + e.getMessage());
                 }
             }
         });
@@ -196,7 +157,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
                 public void onResponse(JSONObject jsonResponse) {}
             });
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Erro:\n" + e.getMessage());
         }
     }
 
@@ -212,7 +173,7 @@ public class FriendServiceImpl extends DefaultRestClient implements FriendServic
             });
 
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Erro:\n" + e.getMessage());
         }
     }
 }

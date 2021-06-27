@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.br.opet.openet.R;
 import com.br.opet.openet.model.FriendModel;
 import com.br.opet.openet.service.impl.FriendServiceImpl;
+import com.br.opet.openet.util.ComponentUtil;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.Iterator;
@@ -49,7 +51,17 @@ public class FriendRequestRecyclerViewAdapter extends RecyclerView.Adapter<Frien
         holder.friendId.setText(friendsArrayList.get(position).getId());
 
         if(friendsArrayList.get(position).getImage() != null)
-            Picasso.get().load(friendsArrayList.get(position).getImage()).into(holder.friendAvatarImageview);
+            Picasso.get().load(friendsArrayList.get(position).getImage()).into(holder.friendAvatarImageview, new Callback() {
+                @Override
+                public void onSuccess() {
+                    holder.friendAvatarImageview.setImageBitmap(
+                            ComponentUtil.getRoundedCroppedBitmap(
+                                    ComponentUtil.cropToSquare(
+                                            ComponentUtil.drawableToBitmap(holder.friendAvatarImageview.getDrawable()))));
+                }
+                @Override
+                public void onError(Exception e) {e.printStackTrace();}
+            });
     }
 
     @Override
